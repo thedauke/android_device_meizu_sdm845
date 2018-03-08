@@ -513,7 +513,7 @@ service qti /system/vendor/bin/qti
 service sensors /vendor/bin/sensors.qcom
     class core
     user root
-    group root
+    group root system
     disabled
 
 on property:ro.vendor.use_data_netmgrd=false
