@@ -875,7 +875,7 @@ etc/sensors/proto/sns_timer.proto
 etc/sensors/proto/sns_ultra_violet.proto
 etc/sensors/proto/sns_wrist_tilt_gesture.proto
 vendor/bin/mz_sensor_test
-vendor/bin/sensors.qcom
+vendor/bin/sensors.qcom:vendor/bin/sensors.qti
 vendor/lib/libSSc.so
 
 # Sensor - from polaris - Xiaomi/polaris/polaris:10/QKQ1.190828.002/V12.0.2.0.QDGCNXM:user/release-keys
