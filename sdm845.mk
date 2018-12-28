@@ -162,7 +162,8 @@ PRODUCT_PACKAGES += \
 
 # IMS
 PRODUCT_PACKAGES += \
-    ims-ext-common
+    ims-ext-common \
+    ims_ext_common.xml
 
 # Input
 PRODUCT_COPY_FILES += \
@@ -229,7 +230,6 @@ PRODUCT_PACKAGES += \
     android.hardware.radio.config@1.0.vendor \
     android.hardware.radio.deprecated@1.0.vendor \
     android.hardware.secure_element@1.0.vendor \
-    ims-ext-common \
     libjson \
     librmnetctl \
     libxml2
