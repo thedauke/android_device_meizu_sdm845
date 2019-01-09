@@ -139,7 +139,7 @@ PRODUCT_COPY_FILES += \
 
 # Qualcomm vndfwk detect
 PRODUCT_PACKAGES += \
-    libqti_vndfwk_detect
+    libqti_vndfwk_detect.vendor
 
 # Health
 PRODUCT_PACKAGES += \
