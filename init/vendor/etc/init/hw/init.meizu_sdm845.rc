@@ -74,9 +74,6 @@ on post-fs-data
     chown system audio /dev/msm_cirrus_playback
     chmod 0660 /dev/msm_cirrus_playback
 
-    # Start FOD HAL
-    setprop sys.meizu.fingerprint.boot start
-
 on boot
     # MZ_RPMB_CTL
     chown system system /dev/mz_rpmb_ctl
