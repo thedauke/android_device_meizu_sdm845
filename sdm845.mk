@@ -289,6 +289,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_EXTRA_VNDK_VERSIONS := 29 28 27
 
 PRODUCT_PACKAGES += \
+    libwui \
     com.android.vndk.current.on_vendor
 
 PRODUCT_COPY_FILES += \
