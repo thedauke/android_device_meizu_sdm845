@@ -8,4 +8,4 @@ on post-fs-data
     chown system system /data/vendor/display
 
 on property:sys.boot_completed=1
-    exec - system system -- /vendor/bin/vendor.lineage.livedisplay@2.0-init.sh
+    restart vendor.livedisplay-hal-2-0-meizu_sdm845

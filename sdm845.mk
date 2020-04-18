@@ -217,7 +217,6 @@ PRODUCT_PACKAGES += \
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-init.sh \
     vendor.lineage.livedisplay@2.0-service.meizu_sdm845
 
 # Media
