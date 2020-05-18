@@ -9,7 +9,6 @@
 #define LOG_TAG "InscreenService"
 
 #include "FingerprintInscreen.h"
-#include "StellerClientCallback.h"
 #include "KeyEventWatcher.h"
 
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
@@ -23,9 +22,6 @@
 #include <fstream>
 #include <cmath>
 #include <thread>
-
-#define NOTIFY_FINGER_DETECTED 1
-#define NOTIFY_FINGER_REMOVED 2
 
 #define NOTIFY_HAL_DELAY 100
 
@@ -81,7 +77,6 @@ FingerprintInscreen::FingerprintInscreen()
     , mIconShown{false}
     {
     mSteller = ISteller::getService();
-    mStellerClientCallback = new StellerClientCallback();
 
     keyEventWatcher = new KeyEventWatcher(TOUCHPANAL_DEV_PATH, [this](const std::string&, input_event evt) {
         if (evt.code == KEY_FOD) {
@@ -119,7 +114,7 @@ Return<void> FingerprintInscreen::onPress() {
     std::thread([this]() {
         std::this_thread::sleep_for(std::chrono::milliseconds(NOTIFY_HAL_DELAY));
         if (mFingerPressed) {
-            notifyHal(NOTIFY_FINGER_DETECTED, 0);
+            notifyHal(0x7f16, 0, 0);
         }
     }).detach();
     return Void();
@@ -127,7 +122,7 @@ Return<void> FingerprintInscreen::onPress() {
 
 Return<void> FingerprintInscreen::onRelease() {
     mFingerPressed = false;
-    notifyHal(NOTIFY_FINGER_REMOVED, 0);
+    notifyHal(0x7f16, 1, 0);
     release_wake_lock(LOG_TAG);
     return Void();
 }
@@ -178,10 +173,10 @@ Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallb
     return Void();
 }
 
-void FingerprintInscreen::notifyHal(int32_t status, int32_t data) {
-    Return<void> ret = this->mSteller->notify(status, data, mStellerClientCallback);
+void FingerprintInscreen::notifyHal(int32_t type, int32_t cmd, int32_t flag) {
+    Return<void> ret = this->mSteller->notifyHal(type, cmd, flag);
     if (!ret.isOk()) {
-        LOG(ERROR) << "notifyHal(" << status << ") error: " << ret.description();
+        LOG(ERROR) << "notifyHal(" << cmd << ") error: " << ret.description();
     }
 }
 

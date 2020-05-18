@@ -21,7 +21,6 @@
 
 #include <android-base/strings.h>
 #include <cutils/properties.h>
-#include <hardware/fingerprint.h>
 #include <hardware/hardware.h>
 #include <hardware/hw_auth_token.h>
 #include <inttypes.h>
@@ -387,6 +386,11 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
             }
             break;
     }
+}
+
+Return<void> BiometricsFingerprint::notifyHal(int32_t type, int32_t cmd, int32_t flag) {
+    mDevice->customHalExtSendCmd(mDevice, type, cmd, flag);
+    return Void();
 }
 
 }  // namespace implementation

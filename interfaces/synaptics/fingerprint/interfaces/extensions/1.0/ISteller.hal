@@ -1,7 +1,5 @@
 package vendor.synaptics.fingerprint.interfaces.extensions@1.0;
 
-import vendor.synaptics.fingerprint.interfaces.extensions@1.0::IStellerClientCallback;
-
 interface ISteller {
-    notify(int32_t status, int32_t data, IStellerClientCallback Callback);
+    notifyHal(int32_t type, int32_t cmd, int32_t flag);
 };
