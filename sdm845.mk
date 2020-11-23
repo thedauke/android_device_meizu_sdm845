@@ -93,8 +93,7 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth.a2dp@1.0-impl \
-    libbthost_if
+    android.hardware.bluetooth.a2dp@1.0-impl
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -111,13 +110,11 @@ PRODUCT_PACKAGES += \
     android.hardware.configstore@1.1-service \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
-    android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     memtrack.sdm845 \
-    libdrm.vendor \
     libtinyxml \
     libvulkan
 
@@ -142,8 +139,7 @@ PRODUCT_COPY_FILES += \
 
 # Qualcomm vndfwk detect
 PRODUCT_PACKAGES += \
-    libqti_vndfwk_detect \
-    libqti_vndfwk_detect.vendor
+    libqti_vndfwk_detect
 
 # Health
 PRODUCT_PACKAGES += \
@@ -174,11 +170,6 @@ PRODUCT_PACKAGES += \
     ipacm \
     IPACM_cfg.xml
 
-# IPv6
-PRODUCT_PACKAGES += \
-    ebtables \
-    ethertypes
-
 # IRQ
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
@@ -198,10 +189,6 @@ PRODUCT_PACKAGES += \
 # TF lite
 PRODUCT_PACKAGES += \
     libtflite
-
-# PSI
-PRODUCT_PACKAGES += \
-    libpsi.vendor
 
 # Service Tracker
 PRODUCT_PACKAGES += \
@@ -261,13 +248,6 @@ PRODUCT_PACKAGES += \
     libjson \
     librmnetctl \
     libxml2
-
-# RCS
-PRODUCT_PACKAGES += \
-    rcs_service_aidl \
-    rcs_service_aidl.xml \
-    rcs_service_api \
-    rcs_service_api.xml
 
 # RenderScript
 PRODUCT_PACKAGES += \
@@ -341,7 +321,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libclang_rt.ubsan_standalone-arm-android \
     libnl \
-    libwfdaac \
     libwfdaac_vendor \
     WfdService \
     WfdCommon
