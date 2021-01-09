@@ -261,8 +261,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_EXTRA_VNDK_VERSIONS := 29 28 27
 
 PRODUCT_PACKAGES += \
+    com.android.vndk.current.on_vendor \
     libwui \
-    com.android.vndk.current.on_vendor
+    vndk-apex-ext
 
 PRODUCT_COPY_FILES += \
     prebuilts/vndk/v28/arm64/arch-arm64-armv8-a/shared/vndk-sp/libbase.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libbv28.so \
