@@ -2842,13 +2842,13 @@
     <!-- voice mail mode end-->
 
     <path name="headphones-low-gain">
-        <ctl name="RX1 Mix Digital Volume" value="78" />
-        <ctl name="RX2 Mix Digital Volume" value="78" />
+        <ctl name="RX1 Mix Digital Volume" value="85" />
+        <ctl name="RX2 Mix Digital Volume" value="85" />
     </path>
 
     <path name="headphones-high-gain">
-        <ctl name="RX1 Mix Digital Volume" value="84" />
-        <ctl name="RX2 Mix Digital Volume" value="84" />
+        <ctl name="RX1 Mix Digital Volume" value="85" />
+        <ctl name="RX2 Mix Digital Volume" value="85" />
     </path>
 
     <!-- Added for ADSP testfwk -->

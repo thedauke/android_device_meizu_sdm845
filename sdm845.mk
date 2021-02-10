@@ -51,8 +51,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
-    vendor/lineage/config/permissions/vendor.lineage.biometrics.fingerprint.inscreen.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/vendor.lineage.biometrics.fingerprint.inscreen.xml
+    frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml 
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
@@ -314,13 +313,16 @@ PRODUCT_PACKAGES += \
     TetheringConfigOverlay
 
 # Doze
-PRODUCT_PACKAGES += \
-    ParanoidDoze
+#PRODUCT_PACKAGES += \
+ #   ParanoidDoze
 
 # KeyHandler
 PRODUCT_PACKAGES += \
     KeyHandler
 
-# FOD specific of crDroid
-EXTRA_FOD_ANIMATIONS := true
-TARGET_HAS_FOD := true
+#PE stuff
+
+# Wallpapers
+PRODUCT_PACKAGES += \
+    PixelLiveWallpaperPrebuilt
+
