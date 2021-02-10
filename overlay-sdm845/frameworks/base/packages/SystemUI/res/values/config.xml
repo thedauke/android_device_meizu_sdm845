@@ -59,6 +59,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     <!-- Allow device to use unordinary cutout overlays-->
     <bool name="config_customCutout">true</bool>
- 
+    
+    <!-- Respect drawable/rounded.xml intrinsic size for multiple radius corner path customization -->
+    <bool name="config_roundedCornerMultipleRadius">true</bool>
 
 </resources>
