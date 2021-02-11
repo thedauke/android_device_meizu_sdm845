@@ -19,4 +19,7 @@
     <dimen name="config_customCutoutTopHeight">240.0px</dimen>
     <dimen name="config_customCutoutBottomWidth">240.0px</dimen>
     <dimen name="config_customCutoutBottomHeight">240.0px</dimen>
+   
+    <!--  Allow CornerHandleView and PathSpecCornerPathRenderer to decouple from corner-radius -->
+    <dimen name="config_rounded_mask_size">94px</dimen>
 </resources>
