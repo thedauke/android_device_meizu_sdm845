@@ -44,3 +44,6 @@ TARGET_GAPPS_ARCH := arm64
 
 # Exclude AudioFX
 TARGET_EXCLUDES_AUDIOFX := true
+
+# Face unlock
+TARGET_FACE_UNLOCK_SUPPORTED := true
