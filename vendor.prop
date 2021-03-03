@@ -33,6 +33,10 @@ ro.qualcomm.cabl=0
 # Camera
 ro.vendor.camera.no_vts=1
 
+# Chipset
+ro.soc.manufacturer=Qualcomm
+ro.soc.model=SDM845
+
 # CNE
 persist.vendor.cne.feature=1
 
