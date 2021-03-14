@@ -2,7 +2,7 @@ on init
     # Vibration motors
     chown system system /sys/class/meizu/motor/on_off
     chown system system /sys/class/meizu/motor/set_cspress
-    chown system system /sys/class/meizu/motor/set_mback
+#   chown system system /sys/class/meizu/motor/set_mback
     chown system system /sys/class/meizu/motor/rtp
     chown system system /sys/class/meizu/motor/set_rtp
     chown system system /sys/class/meizu/motor/freq
