@@ -18,8 +18,22 @@
 
 <resources>
 
+    <!-- If this is true, the screen will come on when you plug/unplug usb/power/whatever. -->
+    <bool name="config_unplugTurnsOnScreen">true</bool>
+
+    <!-- Boolean indicating if restoring network selection should be skipped -->
+    <!-- The restoring is handled by modem if it is true-->
+    <bool translatable="false" name="skip_restoring_network_selection">true</bool>
+
     <!-- Set to true to add links to Cell Broadcast app from Settings and MMS app. -->
     <bool name="config_cellBroadcastAppLinks">true</bool>
+
+    <!-- MMS user agent string -->
+    <string name="config_mms_user_agent" translatable="false">Android-Mms/2.0</string>
+
+    <!-- MMS user agent prolfile url -->
+    <string name="config_mms_user_agent_profile_url" translatable="false"
+            >http://www.google.com/oha/rdf/ua-profile-kila.xml</string>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
          USB interfaces.  If the device doesn't want to support tething over USB this should
@@ -27,6 +41,23 @@
     <string-array translatable="false" name="config_tether_usb_regexs">
         <item>"usb\\d"</item>
         <item>"rndis\\d"</item>
+    </string-array>
+
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+           Wifi interfaces.  If the device doesn't want to support tethering over Wifi this
+           should be empty.  An example would be "softap.*" -->
+    <string-array translatable="false" name="config_tether_wifi_regexs">
+        <item>"softap0"</item>
+        <item>"wigig0"</item>
+        <item>"wifi_br0"</item>
+    </string-array>
+
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+         bluetooth interfaces.  If the device doesn't want to support tethering over bluetooth this
+         should be empty. -->
+    <string-array translatable="false" name="config_tether_bluetooth_regexs">
+            <item>"bnep\\d"</item>
+            <item>"bt-pan"</item>
     </string-array>
 
     <!-- Dhcp range (min, max) to use for tethering purposes -->
@@ -94,14 +125,7 @@
         <item>"1,1"</item>
         <item>"0,1"</item>
         <item>"7,1"</item>
-    </string-array>
-
-    <!-- List of regexpressions describing the interface (if any) that represent tetherable
-         bluetooth interfaces.  If the device doesn't want to support tethering over bluetooth this
-         should be empty. -->
-    <string-array translatable="false" name="config_tether_bluetooth_regexs">
-            <item>"bnep\\d"</item>
-            <item>"bt-pan"</item>
+		<item>"9,1"</item>
     </string-array>
 
     <!-- Boolean indicating if current platform supports BLE peripheral mode -->
@@ -118,13 +142,6 @@
 
    <!-- Enable 802.11ac for Wifi hotspot (SAP) -->
    <bool translatable="false" name="config_wifi_softap_ieee80211ac_supported">true</bool>
-
-    <!-- If this is true, the screen will come on when you plug/unplug usb/power/whatever. -->
-    <bool name="config_unplugTurnsOnScreen">true</bool>
-
-    <!-- Boolean indicating if restoring network selection should be skipped -->
-    <!-- The restoring is handled by modem if it is true-->
-    <bool translatable="false" name="skip_restoring_network_selection">true</bool>
 
     <!-- Is the device capable of hot swapping an ICC Card -->
     <bool name="config_hotswapCapable">true</bool>
@@ -145,27 +162,28 @@
          Zone N + 1     array[N] <= LUX < infinity
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
+        <item>1</item>
         <item>3</item>
-        <item>8</item>
+        <item>5</item>
+        <item>6</item>
+        <item>13</item>
         <item>15</item>
-        <item>25</item>
-        <item>35</item>
-        <item>45</item>
-        <item>60</item>
-        <item>80</item>
+        <item>21</item>
+        <item>33</item>
+        <item>50</item>
         <item>100</item>
-        <item>125</item>
-        <item>155</item>
-        <item>170</item>
-        <item>200</item>
-        <item>225</item>
-        <item>285</item>
-        <item>340</item>
-        <item>425</item>
-        <item>500</item>
-        <item>1000</item>
+        <item>135</item>
+        <item>214</item>
+        <item>400</item>
+        <item>451</item>
+        <item>703</item>
+        <item>1121</item>
+        <item>1647</item>
         <item>2000</item>
-        <item>3000</item>
+        <item>3020</item>
+        <item>6789</item>
+        <item>8113</item>
+        <item>9878</item>
     </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -173,36 +191,30 @@
          than the size of the config_autoBrightnessLevels array.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>5</item>   <!-- 0-3 -->
-        <item>11</item>   <!-- 3-8 -->
-        <item>16</item>   <!-- 8-15 -->
-        <item>27</item>   <!-- 15-25 -->
-        <item>37</item>   <!-- 25-35 -->
-        <item>47</item>   <!-- 35-45 -->
-        <item>59</item>   <!-- 45-60 -->
-        <item>71</item>   <!-- 60-80 -->
-        <item>85</item>   <!-- 80-100 -->
-        <item>102</item>   <!-- 100-125 -->
-        <item>120</item>   <!-- 125-155 -->
-        <item>150</item>   <!-- 155-170 -->
-        <item>175</item>   <!-- 170-200 -->
-        <item>205</item>   <!-- 200-225 -->
-        <item>255</item>   <!-- 225-285 -->
-        <item>310</item>   <!-- 285-340 -->
-        <item>370</item>   <!-- 340-425 -->
-        <item>495</item>   <!-- 425-500 -->
-        <item>590</item>   <!-- 500-1000 -->
-        <item>700</item>   <!-- 1000-2000 -->
-        <item>850</item>  <!-- 2000-3000 -->
-        <item>1023</item>  <!-- 3000+ -->
+        <item>8</item>
+        <item>12</item>
+        <item>12</item>
+        <item>20</item>
+        <item>40</item>
+        <item>52</item>
+        <item>55</item>
+        <item>60</item>
+        <item>68</item>
+        <item>80</item>
+        <item>120</item>
+        <item>136</item>
+        <item>160</item>
+        <item>200</item>
+        <item>216</item>
+        <item>264</item>
+        <item>340</item>
+        <item>460</item>
+        <item>480</item>
+        <item>600</item>
+        <item>760</item>
+        <item>880</item>
+        <item>1024</item>
     </integer-array>
-
-    <!-- MMS user agent string -->
-    <string name="config_mms_user_agent" translatable="false">Android-Mms/2.0</string>
-
-    <!-- MMS user agent prolfile url -->
-    <string name="config_mms_user_agent_profile_url" translatable="false"
-            >http://www.google.com/oha/rdf/ua-profile-kila.xml</string>
 
     <!-- Configuration to restart radio upon PDP_DEACTIVATE with
          error cause as Regular deactivation(36). -->
@@ -275,14 +287,12 @@
     <!-- Whether device has physical tri state switch -->
     <bool name="config_hasAlertSlider">false</bool>
 
-    <!-- Enable face auth when swiping security view
-      for popup cameras-->
-    <bool name="config_faceAuthOnSecurityView">false</bool>
-
-    <!-- Path to fast charging status file to detect whether an oem fast charger is active -->
+    <!-- Path to fast charging status file to detect whether an oem fast charger is active 
     <string name="config_oemFastChargerStatusPath" translatable="false">/sys/class/meizu/charger/fastcharging</string>
-    <!-- Expected value from fast charging status file  -->
+-->
+    <!-- Expected value from fast charging status file  
     <string name="config_oemFastChargerStatusValue" translatable="false">1</string>
+-->
 
     <!-- Whether device supports variable refresh rate -->
     <bool name="config_hasVariableRefreshRate">false</bool>
@@ -323,6 +333,18 @@
         <item>XTRA_SERVER_1=http://xtrapath1.izatcloud.net/xtra3grc.bin</item>
         <item>XTRA_SERVER_2=http://xtrapath2.izatcloud.net/xtra3grc.bin</item>
         <item>XTRA_SERVER_3=http://xtrapath3.izatcloud.net/xtra3grc.bin</item>
+	<item>NTP_SERVER_1=kz.pool.ntp.org</item>
+	<item>NTP_SERVER_2=1.android.pool.ntp.org</item>
+	<item>NTP_SERVER_3=0.asia.pool.ntp.org</item>
+	<item>NTP_SERVER_4=1.asia.pool.ntp.org</item>
+	<item>NTP_SERVER_5=2.asia.pool.ntp.org</item>
+	<item>NTP_SERVER_6=ntp2.vniiftri.ru</item>
+	<item>NTP_SERVER_7=ntp3.vniiftri.ru</item>
+	<item>NTP_SERVER_8=ntp4.vniiftri.ru</item>
+	<item>NTP_SERVER_9=2.europe.pool.ntp.org</item>
+	<item>NTP_SERVER_10=3.europe.pool.ntp.org</item>
+	<item>NTP_SERVER_11=4.europe.pool.ntp.org</item>
+	<item>NTP_SERVER_12=0.cn.pool.ntp.org</item>
     </string-array>
 
     <!-- Remote server that can provide NTP responses. -->
@@ -349,14 +371,7 @@
     <integer name="config_sms_authorization_timeout_ms">15000</integer>
     <!-- Enable SMS authorization support -->
     <bool name="config_sms_authorization_enabled">true</bool>
-    <!-- List of regexpressions describing the interface (if any) that represent tetherable
-           Wifi interfaces.  If the device doesn't want to support tethering over Wifi this
-           should be empty.  An example would be "softap.*" -->
-    <string-array translatable="false" name="config_tether_wifi_regexs">
-        <item>"softap0"</item>
-        <item>"wigig0"</item>
-        <item>"wifi_br0"</item>
-    </string-array>
+   
 
      <!-- dual sap mode is supported on this device. -->
      <bool name="config_wifi_dual_sap_mode_enabled">true</bool>
@@ -374,13 +389,24 @@
 
 
                           <!-- doze & AOD -->
-
-    <!-- Screen brightness when dozing. -->
-    <integer name="config_screenBrightnessDoze">27</integer>   
-    
-    <!-- Enable doze mode -->
+    <!-- Indicate whether closing the lid causes the device to go to sleep and opening
+         it causes the device to wake up.
+         The default is false. -->
+    <bool name="config_lidControlsSleep">true</bool>
+	    
+	<!-- ComponentName of a dream to show whenever the system would otherwise have
+         gone to sleep.  When the PowerManager is asked to go to sleep, it will instead
+         try to start this dream if possible.  The dream should typically call startDozing()
+         to put the display into a low power state and allow the application processor
+         to be suspended.  When the dream ends, the system will go to sleep as usual.
+         Specify the component name or an empty string if none.
+         Note that doze dreams are not subject to the same start conditions as ordinary dreams.
+         Doze dreams will run whenever the power manager is in a dozing state. -->
     <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
-  
+	
+    <!-- Screen brightness when dozing. -->
+    <integer name="config_screenBrightnessDoze">50</integer>   
+     
     <!-- If true, the doze component is not started until after the screen has been
          turned off and the screen off animation has been performed. -->
     <bool name="config_dozeAfterScreenOffByDefault">true</bool>
@@ -480,7 +506,7 @@
          0: 3 button mode (back, home, overview buttons)
          1: 2 button mode (back, home buttons + swipe up for overview)
          2: gestures only for back, home and overview -->
-    <integer name="config_navBarInteractionMode">1</integer>
+    <integer name="config_navBarInteractionMode">2</integer>
 
     <!-- When true use the linux /dev/input/event subsystem to detect the switch changes
          on the headphone/microphone jack. When false use the older uevent framework. -->
@@ -528,10 +554,11 @@
     <bool name="config_biometricHelpShowOnlyWhenFailed">true</bool>
 
     <!-- Enable face auth only when swiping security view -->
-    <bool name="config_faceAuthOnlyOnSecurityView">true</bool>
+    <bool name="config_faceAuthOnlyOnSecurityView">false</bool>
 
     <!-- If face auth sends the user directly to home/last open app, or stays on keyguard -->
     <bool name="config_faceAuthDismissesKeyguard">false</bool>
+    <bool name="config_faceAuthOnSecurityView">false</bool>
    
     <!-- Screen brightness used to dim the screen when the user activity
          timeout expires.  May be less than the minimum allowed brightness setting
@@ -552,7 +579,7 @@
          brightness changes occur in response to an observed change in light level that exceeds the
          hysteresis threshold. -->
     <integer name="config_autoBrightnessBrighteningLightDebounce">2000</integer>
-    <integer name="config_autoBrightnessDarkeningLightDebounce">4000</integer>
+    <integer name="config_autoBrightnessDarkeningLightDebounce">3000</integer>
 
     <!-- Amount of time it takes for the light sensor to warm up in milliseconds.
          For this time after the screen turns on, the Power Manager
@@ -560,7 +587,10 @@
     <integer name="config_lightSensorWarmupTime">200</integer>
 
     <!-- Fast brightness animation ramp rate in brightness units per second-->
-    <integer translatable="false" name="config_brightness_ramp_rate_fast">400</integer>
+    <integer translatable="false" name="config_brightness_ramp_rate_fast">720</integer>
+    
+<!-- Slow brightness animation ramp rate in brightness units per second-->
+    <integer translatable="false" name="config_brightness_ramp_rate_slow">240</integer>
 
     <!-- Radius of the software rounded corners. -->
     <dimen name="rounded_corner_radius">94px</dimen>
