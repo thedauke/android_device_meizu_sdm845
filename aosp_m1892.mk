@@ -35,3 +35,18 @@ BUILD_FINGERPRINT := meizu/qssi/qssi:10/QKQ1.191222.002/1595524937:user/release-
 PRODUCT_PRODUCT_PROPERTIES += \
     fod.dimming.min=40 \
     fod.dimming.max=255
+
+# Bootanimation Resolution
+TARGET_BOOT_ANIMATION_RES := 1080
+
+#GAPPS
+TARGET_GAPPS_ARCH := arm64
+
+# Exclude AudioFX
+TARGET_EXCLUDES_AUDIOFX := true
+
+# Pixel customization
+TARGET_FACE_UNLOCK_SUPPORTED := true
+TARGET_SUPPORTS_GOOGLE_RECORDER := true
+TARGET_INCLUDE_STOCK_ARCORE := true
+TARGET_INCLUDE_LIVE_WALLPAPERS := true
