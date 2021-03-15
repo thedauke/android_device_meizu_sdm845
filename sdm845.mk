@@ -313,8 +313,8 @@ PRODUCT_PACKAGES += \
     TetheringConfigOverlay
 
 # Doze
-#PRODUCT_PACKAGES += \
- #   ParanoidDoze
+PRODUCT_PACKAGES += \
+    ParanoidDoze
 
 # KeyHandler
 PRODUCT_PACKAGES += \
