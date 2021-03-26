@@ -316,10 +316,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ParanoidDoze
 
-# KeyHandler
-PRODUCT_PACKAGES += \
-    KeyHandler
-
 #PE stuff
 
 # Wallpapers
