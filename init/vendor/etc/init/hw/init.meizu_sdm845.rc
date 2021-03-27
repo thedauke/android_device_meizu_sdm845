@@ -95,6 +95,9 @@ on boot
     # Screen off gestures
     chown system system /sys/class/meizu/tp/gesture_control
     chmod 0660 /sys/class/meizu/tp/gesture_control
+    #DC mode
+    chmod 0644 sys/class/meizu/lcm/display/DC_Enable
+    chown system system sys/class/meizu/lcm/display/DC_Enable
 
     # Meizu Sensor Test service
     chown system system /vendor/bin/mz_sensor_test
