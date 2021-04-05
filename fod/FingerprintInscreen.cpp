@@ -31,7 +31,6 @@
 
 #define BOOST_ENABLE_PATH "/sys/class/meizu/fp/qos_set"
 #define BRIGHTNESS_PATH "/sys/class/backlight/panel0-backlight/brightness"
-#define DOZE_ENABLE_PATH "/sys/class/meizu/lcm/display/doze_s2"
 
 #define FOD_POS_X 149 * 3
 #define FOD_POS_Y 531 * 3
@@ -116,7 +115,6 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
 Return<void> FingerprintInscreen::onPress() {
     acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
     mFingerPressed = true;
-    set(DOZE_ENABLE_PATH, 1);
     set(BOOST_ENABLE_PATH, 1);
     std::thread([this]() {
         std::this_thread::sleep_for(std::chrono::milliseconds(NOTIFY_HAL_DELAY));
