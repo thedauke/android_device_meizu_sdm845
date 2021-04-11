@@ -186,6 +186,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_BOOT_JARS += \
     QPerformance \
     UxPerformance
+
 # Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal@2.0
@@ -193,6 +194,10 @@ PRODUCT_PACKAGES += \
 # TF lite
 PRODUCT_PACKAGES += \
     libtflite
+
+# Service Tracker
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.servicetracker@1.2
 
 # IRSC
 PRODUCT_COPY_FILES += \
