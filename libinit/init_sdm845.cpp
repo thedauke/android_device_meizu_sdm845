@@ -30,7 +30,9 @@
 #include <fstream>
 #include <unistd.h>
 
+#include <android-base/file.h>
 #include <android-base/properties.h>
+#include <android-base/strings.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
@@ -38,26 +40,66 @@
 #include "vendor_init.h"
 
 using android::base::GetProperty;
+using android::base::ReadFileToString;
+using android::base::Trim;
 
-void property_override(char const prop[], char const value[])
+// copied from build/tools/releasetools/ota_from_target_files.py
+// but with "." at the end and empty entry
+std::vector<std::string> ro_product_props_default_source_order = {
+    "",
+    "bootimage.",
+    "system.",
+    "system_ext.",
+    "product.",
+    "odm.",
+    "vendor.",
+};
+
+void property_override(char const prop[], char const value[], bool add)
 {
-    prop_info *pi;
-    pi = (prop_info*) __system_property_find(prop);
-    if (pi)
+    auto pi = (prop_info *) __system_property_find(prop);
+    if (pi != nullptr) {
         __system_property_update(pi, value, strlen(value));
-    else
+    } else if (add) {
         __system_property_add(prop, strlen(prop), value, strlen(value));
+    }
 }
-void property_override_dual(char const system_prop[],
-    char const vendor_prop[], char const value[])
+
+void set_ro_product_prop(char const prop[], char const value[])
 {
-    property_override(system_prop, value);
-    property_override(vendor_prop, value);
+    for (const auto &source : ro_product_props_default_source_order) {
+        auto prop_name = "ro.product." + source + prop;
+        property_override(prop_name.c_str(), value, false);
+    }
+}
+
+void set_ro_build_prop(char const prop[], char const value[])
+{
+    for (const auto &source : ro_product_props_default_source_order) {
+        auto prop_name = "ro." + source + "build." + prop;
+        property_override(prop_name.c_str(), value, false);
+    }
 }
 
 void vendor_load_properties()
 {
-    property_override_dual("ro.build.type", "ro.vendor.build.type", "user");
-    property_override_dual("ro.build.tags", "ro.vendor.build.tags", "release-keys");
-    property_override("ro.boot.verifiedbootstate", "green");
+    char const *mz_info_serialno_file = "/proc/sys/kernel/boot_reason";
+    std::string serialno;
+
+    if (ReadFileToString(mz_info_serialno_file, &serialno)) {
+        if (Trim(serialno).find("882H")) {
+            set_ro_build_prop("fingerprint", "Meizu/meizu_16th/16th:8.1.0/OPM1.171019.026/1554756792:user/release-keys");
+            set_ro_product_prop("name", "meizu_16th");
+            property_override("ro.build.description", "meizu_16th-user 8.1.0 OPM1.171019.026 1554756792 release-keys", true);
+        }
+    }
+
+    set_ro_build_prop("type", "user");
+    set_ro_build_prop("tags", "release-keys");
+    property_override("ro.boot.verifiedbootstate", "green", true);
+    property_override("ro.boot.flash.locked", "1", true);
+    property_override("ro.boot.verifiedbootstate", "green", true);
+    property_override("ro.boot.veritymode", "enforcing", true);
+    property_override("ro.boot.vbmeta.device_state", "locked", true);
+    property_override("ro.boot.selinux", "enforcing", true);
 }
