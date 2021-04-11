@@ -338,12 +338,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     MeizuParts
 
-#PE stuff
+# KeyHandler
+PRODUCT_PACKAGES += \
+    KeyHandler
 
-# Wallpapers
+#PE stuff
+#Wallpapers
 PRODUCT_PACKAGES += \
     PixelLiveWallpaperPrebuilt
-
 
 # FastCharge HAL
 PRODUCT_PACKAGES += \
