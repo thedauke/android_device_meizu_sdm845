@@ -21,15 +21,13 @@ set -e
 VENDOR=meizu
 DEVICE_COMMON=sdm845
 
-INITIAL_COPYRIGHT_YEAR=2020
-
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
 DEV_ROOT="$MY_DIR"/../../..
 
-HELPER="$DEV_ROOT"/vendor/aosp/build/tools/extract_utils.sh
+HELPER="$DEV_ROOT"/tools/extract-utils/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1
@@ -65,7 +63,6 @@ write_footers
 
 if [ -n "${DEVICE}" ]; then
     # Reinitialize the helper for device
-    INITIAL_COPYRIGHT_YEAR="$DEVICE_BRINGUP_YEAR"
     setup_vendor "${DEVICE}" "${VENDOR}" "${DEV_ROOT}" false
 
       # Copyright headers and guards
