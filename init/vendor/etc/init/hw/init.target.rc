@@ -57,20 +57,26 @@ on fs
     mkdir /persist/rfs/msm/slpi 0700 vendor_rfs vendor_rfs
     mkdir /persist/rfs/shared 0700 vendor_rfs vendor_rfs
 
+on late-fs
+    # Start services for bootani
+    start surfaceflinger
+    start bootanim
+    start vendor.hwcomposer-2-4
+    start vendor.configstore-hal
+    start vendor.qti.hardware.display.allocator
+
 on post-fs
     start qseecomd
     exec - system system -- /vendor/bin/init.qti.qseecomd.sh
     write /dev/ipa 1
 
 on post-fs-data
-    mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
     mkdir /tombstones/lpass 0771 system system
     mkdir /tombstones/wcnss 0771 system system
     mkdir /tombstones/dsps 0771 system system
     mkdir /data/vendor/hbtp 0750 system system
     mkdir /persist/qti_fp 0700 system system
-    mkdir /data/misc/seemp 0700 system system
     mkdir /data/vendor/tloc 0700 system drmrpc
 
 # For cpusets initialize for Silver Only first and then Silver + Gold
