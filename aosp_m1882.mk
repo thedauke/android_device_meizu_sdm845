@@ -32,10 +32,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 
 BUILD_FINGERPRINT := meizu/qssi/qssi:10/QKQ1.191222.002/1594833800:user/release-keys
 
-PRODUCT_PRODUCT_PROPERTIES += \
-    fod.dimming.min=40 \
-    fod.dimming.max=255
-
 # Bootanimation Resolution
 TARGET_BOOT_ANIMATION_RES := 1080
 
