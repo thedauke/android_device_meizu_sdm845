@@ -392,7 +392,7 @@
     <!-- Indicate whether closing the lid causes the device to go to sleep and opening
          it causes the device to wake up.
          The default is false. -->
-    <bool name="config_lidControlsSleep">true</bool>
+    <bool name="config_lidControlsSleep">false</bool>
 	    
 	<!-- ComponentName of a dream to show whenever the system would otherwise have
          gone to sleep.  When the PowerManager is asked to go to sleep, it will instead
@@ -401,15 +401,23 @@
          to be suspended.  When the dream ends, the system will go to sleep as usual.
          Specify the component name or an empty string if none.
          Note that doze dreams are not subject to the same start conditions as ordinary dreams.
-         Doze dreams will run whenever the power manager is in a dozing state. -->
+         Doze dreams will run whenever the power manager is in a dozing state.  -->
     <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
-	
+    <string name="config_customDozePackage">org.lineageos.settings/org.lineageos.settings.doze.DozeSettingsActivity</string>
+
     <!-- Screen brightness when dozing. -->
-    <integer name="config_screenBrightnessDoze">50</integer>   
+    <integer name="config_screenBrightnessDoze">15</integer>   
      
     <!-- If true, the doze component is not started until after the screen has been
          turned off and the screen off animation has been performed. -->
-    <bool name="config_dozeAfterScreenOffByDefault">true</bool>
+    <bool name="config_dozeAfterScreenOffByDefault">false</bool>
+    
+    <!-- If true, the doze component is not started until after the screen has been
+         turned off and the screen off animation has been performed. -->
+    <bool name="config_dozeAfterScreenOff">false</bool>
+
+    <!-- Whether the display blanks itself when transitioning from a doze to a non-doze state -->
+    <bool name="config_displayBlanksAfterDoze">true</bool>
 
     <!-- Control whether the always on display mode is available. This should only be enabled on
          devices where the display has been tuned to be power efficient in DOZE and/or DOZE_SUSPEND
@@ -418,14 +426,14 @@
 
     <!-- Control whether the always on display mode is enabled by default. This value will be used
          during initialization when the setting is still null. -->
-    <bool name="config_dozeAlwaysOnEnabled">true</bool>
-
-    <!-- Whether the display blanks itself when transitioning from a doze to a non-doze state -->
-    <bool name="config_displayBlanksAfterDoze">true</bool>
+    <bool name="config_dozeAlwaysOnEnabled">false</bool>
 
     <!-- True if the display hardware only has brightness buckets rather than a full range of
          backlight values -->
-    <bool name="config_displayBrightnessBucketsInDoze">true</bool>
+    <bool name="config_displayBrightnessBucketsInDoze">false</bool>
+
+    <!-- Doze: does this device support STATE_DOZE?  -->
+    <bool name="doze_display_state_supported">true</bool>
 
     <!-- Power Management: Specifies whether to decouple the auto-suspend state of the
          device from the display on/off state.
@@ -444,7 +452,7 @@
          to maximize power savings but not all devices support it.
          Refer to autosuspend.h for details.
     -->
-    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
+    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
 
     <!-- Power Management: Specifies whether to decouple the interactive state of the
          device from the display on/off state.
@@ -460,7 +468,23 @@
          to maximize power savings but not all devices support it.
          Refer to power.h for details.
     -->
-    <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>
+    <bool name="config_powerDecoupleInteractiveModeFromDisplay">false</bool>
+
+    <!-- Set this to true to enable the platform's auto-power-save modes like doze and
+          app standby.  These are not enabled by default because they require a standard
+          cloud-to-device messaging service for apps to interact correctly with the modes
+          (such as to be able to deliver an instant message to the device even when it is
+          dozing).  This should be enabled if you have such services and expect apps to
+          correctly use them when installed on your device.  Otherwise, keep this disabled
+          so that applications can still use their own mechanisms. -->
+    <bool name="config_enableAutoPowerModes">true</bool>
+
+    <!-- Indicate whether to allow the device to suspend when the screen is off
+         due to the proximity sensor.  This resource should only be set to true
+         if the sensor HAL correctly handles the proximity sensor as a wake-up source.
+         Otherwise, the device may fail to wake out of suspend reliably.
+         The default is false. -->
+    <bool name="config_suspendWhenScreenOffDueToProximity">false</bool>
 
     <!-- Whether device supports sensor based doze customizations -->
     <bool name="config_dozePulsePickup">true</bool>
@@ -567,7 +591,7 @@
 
     <!-- Default screen brightness setting.
          Must be in the range specified by minimum and maximum. -->
-    <integer name="config_screenBrightnessSettingDefault">184</integer>
+    <integer name="config_screenBrightnessSettingDefault">511</integer>
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. -->

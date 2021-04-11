@@ -312,9 +312,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     TetheringConfigOverlay
 
-# Doze
+# Parts
 PRODUCT_PACKAGES += \
-    ParanoidDoze
+    MeizuParts
 
 #PE stuff
 
