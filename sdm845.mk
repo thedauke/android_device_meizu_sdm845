@@ -356,6 +356,7 @@ PRODUCT_PACKAGES += \
 
 # WiFi Display
 PRODUCT_PACKAGES += \
+    libclang_rt.ubsan_standalone-arm-android \
     libnl \
     libwfdaac \
     libwfdaac_vendor \
