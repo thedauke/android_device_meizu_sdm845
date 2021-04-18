@@ -4,17 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-android_app {
+java_library {
     name: "KeyHandler",
-
     srcs: ["src/**/*.java"],
-
-    certificate: "platform",
-    platform_apis: true,
-    privileged: true,
-
-    optimize: {
-        proguard_flags_files: ["proguard.flags"],
-    },
-
 }
