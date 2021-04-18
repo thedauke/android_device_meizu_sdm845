@@ -341,6 +341,18 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/wifi,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)
 
+# WiFi Display
+PRODUCT_PACKAGES += \
+    libclang_rt.ubsan_standalone-arm-android \
+    libnl \
+    libwfdaac \
+    libwfdaac_vendor \
+    WfdService \
+    WfdCommon
+
+PRODUCT_BOOT_JARS += \
+    WfdCommon
+
 # Tethering
 PRODUCT_PACKAGES += \
     TetheringConfigOverlay
@@ -362,14 +374,3 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.lineage.fastcharge@1.0-service.meizu_sdm845
 
-# WiFi Display
-PRODUCT_PACKAGES += \
-    libclang_rt.ubsan_standalone-arm-android \
-    libnl \
-    libwfdaac \
-    libwfdaac_vendor \
-    WfdService \
-    WfdCommon
-
-PRODUCT_BOOT_JARS += \
-    WfdCommon
