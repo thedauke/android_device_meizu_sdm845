@@ -358,6 +358,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libnl \
     libwfdaac \
+    libwfdaac_vendor \
     WfdService \
     WfdCommon
 
