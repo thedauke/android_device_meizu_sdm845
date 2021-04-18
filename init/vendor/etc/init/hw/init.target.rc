@@ -57,14 +57,6 @@ on fs
     mkdir /persist/rfs/msm/slpi 0700 vendor_rfs vendor_rfs
     mkdir /persist/rfs/shared 0700 vendor_rfs vendor_rfs
 
-on late-fs
-    # Start services for bootani
-    start surfaceflinger
-    start bootanim
-    start vendor.hwcomposer-2-4
-    start vendor.configstore-hal
-    start vendor.qti.hardware.display.allocator
-
 on post-fs
     write /dev/ipa 1
 
@@ -194,11 +186,11 @@ service ppd /vendor/bin/mm-pp-dpps
     socket pps stream 0660 system system
     disabled
 
-on property:init.svc.hwcomposer-2-1=stopped
+on property:init.svc.vendor.hwcomposer-2-3=stopped
     stop ppd
 
-on property:init.svc.hwcomposer-2-1=running
+on property:init.svc.vendor.hwcomposer-2-3=running
     start ppd
 
-on property:init.svc.hwcomposer-2-1=restarting
+on property:init.svc.vendor.hwcomposer-2-3=restarting
     stop ppd
