@@ -161,8 +161,11 @@ PRODUCT_COPY_FILES += \
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
+    android.hidl.base@1.0_system \
     libhidltransport \
-    libhwbinder
+    libhidltransport.vendor \
+    libhwbinder \
+    libhwbinder.vendor
 
 # Init
 PRODUCT_COPY_FILES += \
@@ -304,7 +307,6 @@ PRODUCT_PACKAGES += \
 
 # VNDK-SP
 PRODUCT_PACKAGES += \
-    vndk-sp \
     com.android.vndk.current.on_vendor
 
 PRODUCT_COPY_FILES += \

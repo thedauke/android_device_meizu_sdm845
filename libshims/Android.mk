@@ -24,6 +24,7 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_SHARED_LIBRARIES := \
     libgui \
+    libgui_vendor \
     libui
 
 LOCAL_MODULE := libshim_camera
