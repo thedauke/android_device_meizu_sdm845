@@ -1488,3 +1488,7 @@ system_ext/lib64/extractors/libmmparserextractor.so|ac4d39680610b6c1089d5b7b452e
 system_ext/lib64/libavenhancements.so|9445663f482dcc1265fc459d444732d94364097e
 system_ext/lib64/libmmosal.so|378098a961e465b5d14a29f5bc2320e10c88580c
 system_ext/lib64/libmmparser_lite.so|df8e602ebc12d150b2748c43ff0977fff4d25fd3
+
+# AV - from PNX_00WW_FIH-user-11-RKQ1.200906.002-00WW_6_100-release-keys
+vendor/lib/libmmosal.so|57185feced72009af2df1b09117702c9fae7182b
+vendor/lib64/libmmosal.so|e9fdb48163e92b089cea0c397723a8416436c272
