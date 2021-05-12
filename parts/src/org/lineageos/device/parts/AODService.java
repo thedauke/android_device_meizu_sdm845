@@ -12,12 +12,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class AODService extends Service {
 
@@ -25,15 +20,13 @@ public class AODService extends Service {
     private static final boolean DEBUG = false;
 
     private static final long AOD_DELAY_MS = 1000;
+    private static final long PULSE_RESTORE_DELAY_MS = 11000; // maximum pulse notification time 10s
 
-    private ExecutorService mExecutorService;
     private SettingObserver mSettingObserver;
     private ScreenReceiver mScreenReceiver;
-    private LightListener mLightListener;
 
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private boolean mInteractive = true;
-    private boolean mOldBoostAOD = false;
 
     @Override
     public void onCreate() {
@@ -42,13 +35,11 @@ public class AODService extends Service {
 
         mSettingObserver = new SettingObserver(this);
         mScreenReceiver = new ScreenReceiver(this);
-        mLightListener = new LightListener(this);
 
         mSettingObserver.enable();
 
         if (Utils.isAODEnabled(this)) {
             mScreenReceiver.enable();
-            mExecutorService = Executors.newSingleThreadExecutor();
         }
     }
 
@@ -85,61 +76,28 @@ public class AODService extends Service {
     void onDisplayOn() {
         Log.d(TAG, "Device interactive");
         mInteractive = true;
-        mLightListener.disable();
         mHandler.removeCallbacksAndMessages(null);
     }
 
     void onDisplayOff() {
         Log.d(TAG, "Device non-interactive");
+        mInteractive = false;
         mHandler.postDelayed(() -> {
-            Log.d(TAG, "Trigger AOD");
-            mInteractive = false;
-            mExecutorService.execute(AODUpdater);
-            if (getBrightnessMode(0) == 1) {
-                mLightListener.enable();
-            } else {
-                Utils.boostAOD("0");
+            if (!mInteractive) {
+                Log.d(TAG, "Trigger AOD");
+                Utils.enterAOD();
             }
         }, AOD_DELAY_MS);
     }
 
-    void onChangedLuxState(boolean mBoostAOD) {
-        if (!mInteractive && mOldBoostAOD != mBoostAOD) {
-            Log.d(TAG, "Handle ambient lighting around the phone");
-            if (mBoostAOD) {
-                Utils.boostAOD("1");
-            } else {
-                Utils.boostAOD("0");
+    void onDozePulse() {
+        Log.d(TAG, "Doze pulse state detected");
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler.postDelayed(() -> {
+            if (!mInteractive) {
+                Log.d(TAG, "Trigger AOD");
+                Utils.enterAOD();
             }
-            mOldBoostAOD = mBoostAOD;
-        }
+        }, PULSE_RESTORE_DELAY_MS);
     }
-
-    int getBrightnessMode(int defaultValue) {
-        int brightnessMode = defaultValue;
-        try {
-            brightnessMode = Settings.System.getInt(getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS_MODE);
-        } catch (SettingNotFoundException snfe) {
-        }
-        return brightnessMode;
-    }
-
-    Runnable AODUpdater = new Runnable() {
-        @Override
-        public void run() {
-            Log.d(TAG, "Trigger AOD");
-            while (!mInteractive) {
-                mHandler.postDelayed(() -> {
-                    Utils.enterAOD();
-                }, AOD_DELAY_MS);
-                try {
-                    Thread.sleep(7500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
-
 }
