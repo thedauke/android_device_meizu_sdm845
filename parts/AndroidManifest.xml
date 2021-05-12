@@ -20,6 +20,7 @@
     package="org.lineageos.device.parts"
     android:sharedUserId="android.uid.system">
 
+    <uses-permission android:name="com.android.systemui.permission.SELF" />
     <uses-permission android:name="lineageos.permission.HARDWARE_ABSTRACTION_ACCESS" />
 
     <application
