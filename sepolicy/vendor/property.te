@@ -1,2 +1,5 @@
 # FastCharge HAL
 type vendor_fastcharge_prop, property_type;
+
+# FOD HAL
+type vendor_meizu_fp_prop, property_type;

@@ -1,5 +1,8 @@
+set_prop(qti_init_shell, ctl_start_prop)
+set_prop(qti_init_shell, exported_dalvik_prop)
 set_prop(qti_init_shell, exported_system_radio_prop)
 set_prop(qti_init_shell, exported2_system_prop)
+set_prop(qti_init_shell, system_prop)
 
 allow qti_init_shell vendor_radio_data_file:dir create_dir_perms;
 allow qti_init_shell vendor_radio_data_file:file create_file_perms;

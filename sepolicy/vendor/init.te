@@ -1,1 +1,2 @@
-allow init fingerprintd_data_file:file r_file_perms; 
+allow init fingerprintd_data_file:file r_file_perms;
+allow init debugfs_tracing_debug:dir mounton;

@@ -1,0 +1,4 @@
+# QTI MEMORY PASRMANAGER
+attribute hal_pasrmanager_memory;
+attribute hal_pasrmanager_memory_client;
+attribute hal_pasrmanager_memory_server;
