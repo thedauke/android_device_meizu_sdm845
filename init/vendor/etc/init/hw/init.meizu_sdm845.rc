@@ -19,6 +19,10 @@ on init
     chmod 0666 /sys/class/meizu/motor/timeout
     chmod 0666 /sys/class/meizu/motor/proline
 
+    # Charging stuff
+    chown system system /sys/class/meizu/charger/fastcharging
+    chmod 0666 /sys/class/meizu/charger/fastcharging
+
     # Control press pressure
     chown system system /sys/cs_press/cs_press/sleep
     chown system system /sys/cs_press/cs_press/cal_data
@@ -106,10 +110,8 @@ on boot
 
     # Charging and USB stuff
     chown system system /sys/class/meizu/charger/fast_usb_mode
-    chown system system /sys/class/meizu/charger/fastcharging
     chown system system /sys/class/meizu/usb_thermal/sync_temp
     chmod 0666 /sys/class/meizu/charger/fast_usb_mode
-    chmod 0666 /sys/class/meizu/charger/fastcharging
     chmod 0444 /sys/class/meizu/usb_thermal/sync_temp
     # Enabled by default
     write /sys/class/meizu/charger/fast_usb_mode 1
