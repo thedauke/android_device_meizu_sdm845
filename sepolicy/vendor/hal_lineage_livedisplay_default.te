@@ -5,7 +5,8 @@ type hal_lineage_livedisplay_default_exec, exec_type, vendor_file_type, file_typ
 init_daemon_domain(hal_lineage_livedisplay_default)
 
 allow hal_lineage_livedisplay_default sysfs_livedisplay:file rw_file_perms;
-allow hal_lineage_livedisplay_default display_vendor_data_file:file rw_file_perms;
+allow hal_lineage_livedisplay_default display_vendor_data_file:file create_file_perms;
+allow hal_lineage_livedisplay_default display_vendor_data_file:dir rw_dir_perms;
 vndbinder_use(hal_lineage_livedisplay_default)
 binder_call(hal_lineage_livedisplay_default, hal_graphics_composer_default)
 allow hal_lineage_livedisplay_default qdisplay_service:service_manager find;

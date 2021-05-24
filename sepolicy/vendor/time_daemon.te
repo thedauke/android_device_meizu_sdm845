@@ -1,2 +1,2 @@
 allow time_daemon time_data_file:file r_file_perms;
-allow time_daemon time_data_file:dir r_dir_perms;
+allow time_daemon time_data_file:dir rw_dir_perms;
