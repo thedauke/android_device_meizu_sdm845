@@ -101,5 +101,4 @@ void vendor_load_properties()
     property_override("ro.boot.verifiedbootstate", "green", true);
     property_override("ro.boot.veritymode", "enforcing", true);
     property_override("ro.boot.vbmeta.device_state", "locked", true);
-    property_override("ro.boot.selinux", "enforcing", true);
 }
