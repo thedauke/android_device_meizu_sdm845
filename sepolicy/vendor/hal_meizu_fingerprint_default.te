@@ -10,6 +10,8 @@ allow hal_meizu_fingerprint_default mz_fp_data_file:dir w_dir_perms;
 allow hal_meizu_fingerprint_default tee_device:chr_file rw_file_perms;
 allow hal_meizu_fingerprint_default ion_device:chr_file r_file_perms;
 allow hal_meizu_fingerprint_default fp_device:chr_file rw_file_perms;
+allow hal_meizu_fingerprint_default fingerprintd_data_file:file create_file_perms;
+allow hal_meizu_fingerprint_default fingerprintd_data_file:dir w_dir_perms;
 
 binder_call(hal_meizu_fingerprint_default, hal_lineage_inscreen_default)
 
