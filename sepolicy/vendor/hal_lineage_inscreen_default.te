@@ -7,8 +7,7 @@ init_daemon_domain(hal_lineage_inscreen_default)
 binder_call(hal_lineage_inscreen_default, hal_meizu_fingerprint_default)
 
 allow hal_lineage_inscreen_default input_device:chr_file r_file_perms;
-allow hal_lineage_inscreen_default sysfs_backlight:file r_file_perms;
-
+allow hal_lineage_inscreen_default sysfs_graphics:file r_file_perms;
 allow hal_lineage_inscreen_default system_suspend_hwservice:hwservice_manager find;
 
 get_prop(hal_lineage_inscreen_default, vendor_meizu_fp_prop)

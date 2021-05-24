@@ -32,13 +32,16 @@
 /(vendor|system/vendor)/bin/hw/vendor\.qti\.memory\.pasrmanager@[0-9]\.[0-9]-service          u:object_r:hal_pasrmanager_memory_default_exec:s0
 
 # FOD HAL Data
-/data/misc/lcd_id_record          u:object_r:lcd_id_data_file:s0
+/data/vendor/mzfp(/.*)?          u:object_r:mz_fp_data_file:s0
 
 # FOD
 /dev/fpspi          u:object_r:fp_device:s0
 
 # FOD HAL Data
-/data/vendor/misc/audio/acdbdata/delta/adsp_avs_config.acdbdelt          u:object_r:acdb_data_file:s0
+/data/vendor/misc/audio/acdbdata(/.*)?          u:object_r:acdb_data_file:s0
+
+# Time Data
+/data/time(/.*)?          u:object_r:time_data_file:s0
 
 # KGSL
 /sys/class/kgsl(/.*)?          u:object_r:sysfs_kgsl:s0
