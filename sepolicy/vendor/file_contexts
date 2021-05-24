@@ -54,3 +54,6 @@
 
 # Sensors Persists Files
 /persist/sensors(/.*)?          u:object_r:sensors_persist_file:s0
+
+# Charger
+/system/bin/meizu_charger                       u:object_r:charger_exec:s0
