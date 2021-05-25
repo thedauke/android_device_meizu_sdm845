@@ -29,3 +29,6 @@ genfscon proc /mz_info/lcd_id                    u:object_r:proc_lcd_id:s0
 
 # AOD
 genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display@17/display/doze_s2                    u:object_r:sysfs_aod:s0
+
+# CS Press
+genfscon sysfs /devices/platform/soc/88c000.i2c/i2c-1/1-0026/sleep                    u:object_r:sysfs_cspress:s0

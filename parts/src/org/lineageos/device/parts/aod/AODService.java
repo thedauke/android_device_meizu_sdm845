@@ -5,7 +5,7 @@
  *
  */
 
-package org.lineageos.device.parts;
+package org.lineageos.device.parts.aod;
 
 import android.app.Service;
 import android.content.Intent;

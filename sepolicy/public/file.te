@@ -1,2 +1,3 @@
 # SYSFS
 type sysfs_aod, sysfs_type, fs_type;
+type sysfs_cspress, sysfs_type, fs_type;

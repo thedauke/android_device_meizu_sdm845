@@ -29,13 +29,21 @@
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">
 
-        <receiver android:name=".Startup" >
+        <receiver android:name=".aod.Startup" >
             <intent-filter>
                 <action android:name="lineageos.intent.action.INITIALIZE_LINEAGE_HARDWARE" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".AODService" />
+        <service android:name=".aod.AODService" />
+
+        <receiver android:name=".cspress.Startup" >
+            <intent-filter>
+                <action android:name="lineageos.intent.action.INITIALIZE_LINEAGE_HARDWARE" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".cspress.CSPressService" />
 
     </application>
 

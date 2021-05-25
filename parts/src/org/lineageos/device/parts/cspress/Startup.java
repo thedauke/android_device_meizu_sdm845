@@ -5,7 +5,7 @@
  *
  */
 
-package org.lineageos.device.parts;
+package org.lineageos.device.parts.cspress;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,7 +21,7 @@ public class Startup extends BroadcastReceiver {
         final String action = intent.getAction();
         if (ACTION_INITIALIZE_LINEAGE_HARDWARE.equals(action)) {
             context.startServiceAsUser(
-                    new Intent(context, AODService.class),
+                    new Intent(context, CSPressService.class),
                     UserHandle.CURRENT);
         }
     }

@@ -5,7 +5,7 @@
  *
  */
 
-package org.lineageos.device.parts;
+package org.lineageos.device.parts.aod;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
