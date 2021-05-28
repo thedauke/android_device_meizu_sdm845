@@ -24,6 +24,9 @@
 # Vibrator HAL
 /(vendor|system/vendor)/bin/hw/android\.hardware\.vibrator@[0-9]\.[0-9]-service\.meizu_sdm845          u:object_r:hal_vibrator_default_exec:s0
 
+# IFAA
+/(vendor|system/vendor)/bin/hw/vendor\.meizu\.hardware\.ifaa@[0-9]\.[0-9]-service          u:object_r:hal_meizu_ifaa_default_exec:s0
+
 # FOD HAL
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.biometrics\.fingerprint\.inscreen@[0-9]\.[0-9]-service\.meizu_sdm845          u:object_r:hal_lineage_inscreen_default_exec:s0
 /(vendor|system/vendor)/bin/hw/meizu\.biometrics\.fingerprint@[0-9]\.[0-9]-service          u:object_r:hal_meizu_fingerprint_default_exec:s0

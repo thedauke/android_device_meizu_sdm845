@@ -929,6 +929,38 @@ vendor/lib/vendor.qti.hardware.sensorscalibrate@1.0.so
 vendor/lib64/hw/vendor.qti.hardware.sensorscalibrate@1.0-impl.so
 vendor/lib64/vendor.qti.hardware.sensorscalibrate@1.0.so
 
+# IFAA
+-app/IFAAService/IFAAService.apk
+vendor/bin/hw/vendor.meizu.hardware.ifaa@1.0-service
+vendor/etc/init/vendor.meizu.hardware.ifaa@1.0-service.rc
+vendor/firmware/mzifaa.mdt
+vendor/firmware/mzifaa.b01
+vendor/firmware/mzifaa.b06
+vendor/firmware/mzifaa.b07
+vendor/firmware/mzifaa.b00
+vendor/firmware/mzifaa.b05
+vendor/firmware/mzifaa.b02
+vendor/firmware/mzifaa.b03
+vendor/firmware/mzifaa.b04
+vendor/lib/libteeclientjni.so
+vendor/lib/lib_ifaa_ta_client.so
+vendor/lib64/libteeclientjni.so
+vendor/lib64/lib_ifaa_ta_client.so
+vendor/lib64/vendor.meizu.hardware.ifaa@1.0_vendor.so
+
+# Soter
+-app/SoterService/SoterService.apk
+product/lib64/vendor.qti.hardware.soter@1.0.so
+product/framework/vendor.qti.hardware.soter-V1.0-java.jar
+product/lib/vendor.qti.hardware.soter@1.0.so
+vendor/lib64/hw/vendor.qti.hardware.soter@1.0-impl.so
+vendor/lib64/vendor.qti.hardware.soter@1.0_vendor.so
+vendor/bin/hw/vendor.qti.hardware.soter@1.0-service
+vendor/bin/vendor.qti.hardware.soter@1.0-provision
+vendor/etc/init/vendor.qti.hardware.soter@1.0-service.rc
+vendor/lib/hw/vendor.qti.hardware.soter@1.0-impl.so
+vendor/lib/vendor.qti.hardware.soter@1.0_vendor.so
+
 # Thermal
 vendor/bin/thermal-engine
 vendor/etc/thermal-engine.conf

@@ -1,5 +1,7 @@
 sys.listeners.registered               u:object_r:vendor_tee_listener_prop:s0
 vendor.meizu.fp_vendor                 u:object_r:vendor_meizu_fp_prop:s0
+vendor.meizu.fingerprint.              u:object_r:vendor_meizu_fp_prop:s0
+vendor.meizu.ifaa.version              u:object_r:vendor_meizu_ifaa_prop:s0
 persist.vendor.sec.fastchg_enabled     u:object_r:vendor_fastcharge_prop:s0
 persist.camera.UseCaseID               u:object_r:camera_prop:s0
 persist.camera.SingleOIS               u:object_r:camera_prop:s0
