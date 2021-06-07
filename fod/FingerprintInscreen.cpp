@@ -11,17 +11,30 @@
 #include "FingerprintInscreen.h"
 #include "KeyEventWatcher.h"
 
-#define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
-#include <sys/_system_properties.h>
-
 #include <android-base/logging.h>
-#include <android-base/properties.h>
-#include <cutils/properties.h>
 #include <hardware_legacy/power.h>
 #include <hidl/HidlTransportSupport.h>
 #include <fstream>
 #include <cmath>
 #include <thread>
+
+#define TOUCH_NOTIFY_FINGER_STATE 0x7f16
+#define TOUCH_NOTIFY_FINGER_DOWN 0
+#define TOUCH_NOTIFY_FINGER_UP 1
+
+#define NOTIFY_SCREEN_STATE 0x7f05
+#define SCREEN_ON 1
+#define SCREEN_OFF 0
+
+#define NOTIFY_HBM_ON 0x7f17
+#define HBM_ON 1 // this can be random value
+
+#define SET_AUTH_TYPE 0x7f1b
+#define UNLOCK_AUTHENTICATION 0
+#define SOFTWARE_APP_AUTHENTICATION 1
+#define PAYMENT_AUTHENTICATION 2
+
+#define CMD_FLAG 0
 
 #define NOTIFY_HAL_DELAY 100
 
@@ -42,8 +55,6 @@ namespace fingerprint {
 namespace inscreen {
 namespace V1_0 {
 namespace implementation {
-
-using android::base::GetProperty;
 
 /*
  * Write value to path and close file.
@@ -114,7 +125,7 @@ Return<void> FingerprintInscreen::onPress() {
     std::thread([this]() {
         std::this_thread::sleep_for(std::chrono::milliseconds(NOTIFY_HAL_DELAY));
         if (mFingerPressed) {
-            notifyHal(0x7f16, 0, 0);
+            this->mSteller->notifyHal(TOUCH_NOTIFY_FINGER_STATE, TOUCH_NOTIFY_FINGER_DOWN, CMD_FLAG);
         }
     }).detach();
     return Void();
@@ -122,15 +133,13 @@ Return<void> FingerprintInscreen::onPress() {
 
 Return<void> FingerprintInscreen::onRelease() {
     mFingerPressed = false;
-    notifyHal(0x7f16, 1, 0);
+    this->mSteller->notifyHal(TOUCH_NOTIFY_FINGER_STATE, TOUCH_NOTIFY_FINGER_UP, CMD_FLAG);
     release_wake_lock(LOG_TAG);
     return Void();
 }
 
 Return<void> FingerprintInscreen::onShowFODView() {
     mIconShown = true;
-    mFODModel = GetProperty("vendor.meizu.fp_vendor", "");
-    LOG(INFO) << "mFODModel: " << mFODModel;
     return Void();
 }
 
@@ -171,13 +180,6 @@ Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallb
     std::lock_guard<std::mutex> _lock(mCallbackLock);
     mCallback = callback;
     return Void();
-}
-
-void FingerprintInscreen::notifyHal(int32_t type, int32_t cmd, int32_t flag) {
-    Return<void> ret = this->mSteller->notifyHal(type, cmd, flag);
-    if (!ret.isOk()) {
-        LOG(ERROR) << "notifyHal(" << cmd << ") error: " << ret.description();
-    }
 }
 
 void FingerprintInscreen::notifyKeyEvent(int value) {
