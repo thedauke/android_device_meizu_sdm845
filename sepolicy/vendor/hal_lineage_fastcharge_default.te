@@ -1,6 +1,4 @@
-# hal_lineage_fastcharge_default
+allow hal_lineage_fastcharge_default sysfs_charger:file rw_file_perms;
 
 set_prop(hal_lineage_fastcharge_default, vendor_fastcharge_prop)
 set_prop(hal_lineage_fastcharge_default, vendor_default_prop)
-
-allow hal_lineage_fastcharge_default sysfs_charger:file rw_file_perms;

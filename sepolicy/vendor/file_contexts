@@ -1,62 +1,39 @@
-# FastCharge HAL
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.fastcharge@[0-9]\.[0-9]-service\.meizu_sdm845          u:object_r:hal_lineage_fastcharge_default_exec:s0
+# DT2W device
+/dev/vendor\.lineage\.touch@[0-9]\.[0-9](/.*)?        u:object_r:touchpanel_gestures_device:s0
 
-# Touch HAL
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@[0-9]\.[0-9]-service\.meizu_sdm845          u:object_r:hal_lineage_touch_default_exec:s0
+# Data files
+/data/time(/.*)?                            u:object_r:time_data_file:s0
+/data/vendor/cumX(/.*)?                     u:object_r:vendor_camera_data_file:s0
+/data/vendor/misc/audio/acdbdata(/.*)?      u:object_r:acdb_data_file:s0
 
-# Light HAL
-/(vendor|system/vendor)/bin/hw/android\.hardware\.light@[0-9]\.[0-9]-service\.meizu_sdm845          u:object_r:hal_light_default_exec:s0
+# Executables
+/system/bin/meizu_charger                   u:object_r:charger_exec:s0
 
-# DT2W
-/dev/vendor\.lineage\.touch@[0-9]\.[0-9](/.*)?          u:object_r:touchpanel_gestures_device:s0
+# Fingerprint device
+/dev/fpspi    u:object_r:fp_device:s0
 
-# Camera Data
-/data/vendor/cumX(/.*)?          u:object_r:vendor_camera_data_file:s0
+# HALs
+/vendor/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.1-service\.meizu_sdm845               u:object_r:hal_fingerprint_default_exec:s0
+/vendor/bin/hw/android\.hardware\.light@2\.0-service\.meizu_sdm845                                 u:object_r:hal_light_default_exec:s0
+/vendor/bin/hw/android\.hardware\.power\.stats@1\.0-service\.mock                                  u:object_r:hal_power_stats_default_exec:s0
+/vendor/bin/hw/android\.hardware\.vibrator@1\.3-service\.meizu_sdm845                              u:object_r:hal_vibrator_default_exec:s0
+/vendor/bin/hw/vendor\.meizu\.hardware\.ifaa@1\.0-service                                          u:object_r:hal_meizu_ifaa_default_exec:s0
+/vendor/bin/hw/vendor\.lineage\.biometrics\.fingerprint\.inscreen@1\.0-service\.meizu_sdm845       u:object_r:hal_lineage_inscreen_default_exec:s0
+/vendor/bin/hw/vendor\.lineage\.fastcharge@1\.0-service\.meizu_sdm845                              u:object_r:hal_lineage_fastcharge_default_exec:s0
+/vendor/bin/hw/vendor\.lineage\.livedisplay@2\.0-service\.meizu_sdm845                             u:object_r:hal_lineage_livedisplay_default_exec:s0
+/vendor/bin/hw/vendor\.lineage\.touch@1\.0-service\.meizu_sdm845                                   u:object_r:hal_lineage_touch_default_exec:s0
+/vendor/bin/hw/vendor\.qti\.memory\.pasrmanager@1\.0-service                                       u:object_r:hal_pasrmanager_memory_default_exec:s0
 
-# LiveDisplay HAL
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.livedisplay@[0-9]\.[0-9]-service\.meizu_sdm845          u:object_r:hal_lineage_livedisplay_default_exec:s0
-/(vendor|system/vendor)/bin/vendor\.lineage\.livedisplay@[0-9]\.[0-9]-init\.sh          u:object_r:hal_lineage_livedisplay_default_exec:s0
+# KGSL nodes
+/sys/class/kgsl(/.*)?             u:object_r:sysfs_kgsl:s0
 
-# Power stats HAL
-/(vendor|system/vendor)/bin/hw/android\.hardware\.power\.stats@[0-9]\.[0-9]-service\.mock          u:object_r:hal_power_stats_default_exec:s0
-/sys/bus/iio/devices(/.*)?          u:object_r:sysfs_iio:s0
+# Persist files
+/persist/rfs(/.*)?                u:object_r:persist_rfs_file:s0
+/persist/sensors(/.*)?            u:object_r:sensors_persist_file:s0
 
-# Vibrator HAL
-/(vendor|system/vendor)/bin/hw/android\.hardware\.vibrator@[0-9]\.[0-9]-service\.meizu_sdm845          u:object_r:hal_vibrator_default_exec:s0
+# Power stats nodes
+/sys/bus/iio/devices(/.*)?        u:object_r:sysfs_iio:s0
 
-# IFAA
-/(vendor|system/vendor)/bin/hw/vendor\.meizu\.hardware\.ifaa@[0-9]\.[0-9]-service          u:object_r:hal_meizu_ifaa_default_exec:s0
+# Thermal Engine nodesi
+/sys/devices/virtual              u:object_r:sysfs_thermal:s0
 
-# FOD HAL
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.biometrics\.fingerprint\.inscreen@[0-9]\.[0-9]-service\.meizu_sdm845          u:object_r:hal_lineage_inscreen_default_exec:s0
-/(vendor|system/vendor)/bin/hw/meizu\.biometrics\.fingerprint@[0-9]\.[0-9]-service          u:object_r:hal_meizu_fingerprint_default_exec:s0
-
-# Pasrmanager HAL
-/(vendor|system/vendor)/bin/hw/vendor\.qti\.memory\.pasrmanager@[0-9]\.[0-9]-service          u:object_r:hal_pasrmanager_memory_default_exec:s0
-
-# FOD HAL Data
-/data/vendor/mzfp(/.*)?          u:object_r:mz_fp_data_file:s0
-
-# FOD
-/dev/fpspi          u:object_r:fp_device:s0
-
-# FOD HAL Data
-/data/vendor/misc/audio/acdbdata(/.*)?          u:object_r:acdb_data_file:s0
-
-# Time Data
-/data/time(/.*)?          u:object_r:time_data_file:s0
-
-# KGSL
-/sys/class/kgsl(/.*)?          u:object_r:sysfs_kgsl:s0
-
-# RFS
-/persist/rfs(/.*)?          u:object_r:persist_rfs_file:s0
-
-# Thermal Engine
-/sys/devices/virtual          u:object_r:sysfs_thermal:s0
-
-# Sensors Persists Files
-/persist/sensors(/.*)?          u:object_r:sensors_persist_file:s0
-
-# Charger
-/system/bin/meizu_charger                       u:object_r:charger_exec:s0

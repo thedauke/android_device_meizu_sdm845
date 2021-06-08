@@ -1,7 +1,12 @@
+allow system_app {
+  hal_cne_hwservice
+  hal_ifaa_hwservice
+  hal_imsrcsd_hwservice
+}:hwservice_manager find;
+
+binder_call(system_app, hal_rcsservice)
+binder_call(system_app, hal_meizu_ifaa_default)
+
 get_prop(system_app, cnd_vendor_prop)
 get_prop(system_app, vendor_meizu_ifaa_prop)
 get_prop(system_app, vendor_meizu_fp_prop)
-allow system_app hal_imsrcsd_hwservice:hwservice_manager find;
-allow system_app hal_ifaa_hwservice:hwservice_manager find;
-binder_call(system_app, hal_rcsservice)
-binder_call(system_app, hal_meizu_ifaa_default)

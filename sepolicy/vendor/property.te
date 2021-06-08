@@ -1,8 +1,9 @@
-# FastCharge HAL
+# Fastcharge
 type vendor_fastcharge_prop, property_type;
 
-# FOD HAL
+# Fingerprint
+type vendor_fp_prop, property_type;
 type vendor_meizu_fp_prop, property_type;
 
-# IFAA HAL
+# IFAA
 type vendor_meizu_ifaa_prop, property_type;

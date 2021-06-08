@@ -1,0 +1,5 @@
+allow hal_fingerprint_default fp_device:chr_file rw_file_perms;
+allow hal_fingerprint_default tee_device:chr_file rw_file_perms;
+
+set_prop(hal_fingerprint_default, vendor_fp_prop)
+set_prop(hal_fingerprint_default, vendor_meizu_fp_prop)

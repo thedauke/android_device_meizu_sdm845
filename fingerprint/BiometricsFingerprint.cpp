@@ -19,12 +19,14 @@
 
 #include "BiometricsFingerprint.h"
 
+#include <android-base/properties.h>
 #include <android-base/strings.h>
-#include <cutils/properties.h>
 #include <hardware/hardware.h>
 #include <hardware/hw_auth_token.h>
 #include <inttypes.h>
 #include <unistd.h>
+
+using android::base::SetProperty;
 
 namespace android {
 namespace hardware {
@@ -224,9 +226,9 @@ IBiometricsFingerprint* BiometricsFingerprint::getInstance() {
     return sInstance;
 }
 
-void setFpVendorProp(const char* fp_vendor) {
-    property_set("persist.vendor.sys.fp.vendor", fp_vendor);
-    property_set("vendor.meizu.fp_vendor", fp_vendor);
+void setFpVendorProp(const std::string& fp_vendor) {
+    SetProperty("persist.vendor.sys.fp.vendor", fp_vendor);
+    SetProperty("vendor.meizu.fp_vendor", fp_vendor);
 }
 
 fingerprint_device_t* getDeviceForVendor(const char* class_name) {

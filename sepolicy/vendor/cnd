@@ -1,0 +1,1 @@
+allow cnd hal_cne_hwservice:hwservice_manager add;
