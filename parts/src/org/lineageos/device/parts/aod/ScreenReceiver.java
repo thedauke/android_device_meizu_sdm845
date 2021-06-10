@@ -23,7 +23,7 @@ class ScreenReceiver extends BroadcastReceiver {
 
     private final AODService mService;
 
-    private final IntentFilter mScreenStateFilter = new IntentFilter(PULSE_ACTION);
+    private final IntentFilter mScreenStateFilter = new IntentFilter();
 
     private boolean mIsListening = false;
 
@@ -31,17 +31,18 @@ class ScreenReceiver extends BroadcastReceiver {
         mService = service;
         mScreenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
         mScreenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        mScreenStateFilter.addAction(PULSE_ACTION);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
-        if (PULSE_ACTION.equals(action)) {
-            mService.onDozePulse();
-        } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+        if (Intent.ACTION_SCREEN_ON.equals(action)) {
             mService.onDisplayOn();
         } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
             mService.onDisplayOff();
+        } else if (PULSE_ACTION.equals(action)) {
+            mService.onDozePulse();
         }
     }
 

@@ -20,7 +20,7 @@ public class AODService extends Service {
     private static final boolean DEBUG = false;
 
     private static final long AOD_DELAY_MS = 1000;
-    private static final long PULSE_RESTORE_DELAY_MS = 11000; // maximum pulse notification time 10s
+    private static final long PULSE_RESTORE_DELTA_MS = 1000;
 
     private SettingObserver mSettingObserver;
     private ScreenReceiver mScreenReceiver;
@@ -93,11 +93,12 @@ public class AODService extends Service {
     void onDozePulse() {
         Log.d(TAG, "Doze pulse state detected");
         mHandler.removeCallbacksAndMessages(null);
+        int delay = Utils.getDuration(this);
         mHandler.postDelayed(() -> {
             if (!mInteractive) {
                 Log.d(TAG, "Trigger AOD");
                 Utils.enterAOD();
             }
-        }, PULSE_RESTORE_DELAY_MS);
+        }, delay + PULSE_RESTORE_DELTA_MS);
     }
 }
