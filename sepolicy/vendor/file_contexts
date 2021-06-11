@@ -3,7 +3,7 @@
 
 # Data files
 /data/time(/.*)?                            u:object_r:time_data_file:s0
-/data/vendor/cumX(/.*)?                     u:object_r:vendor_camera_data_file:s0
+/data/vendor/camx(/.*)?                     u:object_r:vendor_camera_data_file:s0
 /data/vendor/misc/audio/acdbdata(/.*)?      u:object_r:acdb_data_file:s0
 
 # Executables
