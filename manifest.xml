@@ -588,6 +588,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </interface>
     </hal>
     <hal format="hidl">
+        <name>vendor.qti.data.factory</name>
+        <version>1.0</version>
+        <transport>hwbinder</transport>
+        <interface>
+            <name>IFactory</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl">
         <name>vendor.meizu.hardware.ifaa</name>
         <transport>hwbinder</transport>
         <version>1.0</version>

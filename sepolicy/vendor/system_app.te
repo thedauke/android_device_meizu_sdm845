@@ -1,5 +1,6 @@
 allow system_app {
   hal_cne_hwservice
+  hal_datafactory_hwservice
   hal_ifaa_hwservice
   hal_imsrcsd_hwservice
 }:hwservice_manager find;
