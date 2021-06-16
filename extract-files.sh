@@ -113,6 +113,9 @@ function blob_fixup() {
             patchelf --add-needed "libprocessgroup.so" "${2}"
         fi
         ;;
+    vendor/lib/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so | vendor/lib64/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so)
+        patchelf --remove-needed "libicuuc.so" "${2}"
+        ;;
     esac
 }
 
