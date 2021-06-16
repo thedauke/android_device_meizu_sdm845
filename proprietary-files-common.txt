@@ -1295,7 +1295,7 @@ vendor/radio/qcril_database/qcril.db|a256151ecf6c6cfe628e391a315c0bb8b35a2ad1
 -lib64/vendor.qti.hardware.data.dynamicdds@1.0.so|9656729eda8132ce587afe1744d44e0cba90b319
 -lib64/vendor.qti.ims.rcsconfig@1.0.so|d733577ed30b15571bd8d0858cc49ca18eb15086
 -lib64/vendor.qti.imsrtpservice@1.0.so|bce44cdceab46183699e4e3c2f073f600c550b6a
--priv-app/ims/ims.apk|31f55a9eb4b1afe33111b8f1288b085b8f322397
+-priv-app/ims/ims.apk|c134d0ca17e5062c8f99d7f2f9d81616c78f5955
 etc/permissions/com.qualcomm.qti.imscmservice-V2.0-java.xml|8d25bd7b79baf266950eb484c1a28817f891aec2
 etc/permissions/com.qualcomm.qti.imscmservice-V2.1-java.xml|998076243537f61f3683a3c083f7b27510617368
 etc/permissions/com.qualcomm.qti.imscmservice.xml|db25ef24f1937366d58a53b4f4b8923bc9e98d2d
