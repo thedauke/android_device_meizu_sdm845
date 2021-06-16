@@ -195,7 +195,7 @@ PRODUCT_PACKAGES += \
 
 # Service Tracker
 PRODUCT_PACKAGES += \
-    vendor.qti.hardware.servicetracker@1.2
+    vendor.qti.hardware.servicetracker@1.2.vendor
 
 # IRSC
 PRODUCT_COPY_FILES += \
