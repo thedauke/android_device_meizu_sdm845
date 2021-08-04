@@ -1,4 +1,0 @@
-allow system_app {
-  sysfs_aod
-  sysfs_cspress
-}:file rw_file_perms;
