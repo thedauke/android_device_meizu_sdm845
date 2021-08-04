@@ -207,10 +207,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.meizu_sdm845
 
-# LiveDisplay
-PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service.meizu_sdm845
-
 # Media
 PRODUCT_PACKAGES += \
     libavservices_minijail_vendor \
@@ -271,10 +267,6 @@ PRODUCT_PACKAGES += \
 # Telephony
 PRODUCT_PACKAGES += \
     telephony-ext
-
-# Touch
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.meizu_sdm845
 
 # USB
 PRODUCT_PACKAGES += \
@@ -343,10 +335,6 @@ PRODUCT_PACKAGES += \
 # KeyHandler
 PRODUCT_PACKAGES += \
     KeyHandler
-
-# FastCharge HAL
-PRODUCT_PACKAGES += \
-    vendor.lineage.fastcharge@1.0-service.meizu_sdm845
 
 # FOD specific of crDroid
 EXTRA_FOD_ANIMATIONS := true
