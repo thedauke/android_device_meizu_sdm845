@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.keyhandler;
+package co.aospa.keyhandler;
 
 import android.content.Context;
 import android.util.Log;
