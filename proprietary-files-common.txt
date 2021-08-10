@@ -1342,17 +1342,6 @@ vendor/lib64/libwfdhdcpcp.so|ba43f54ee4e34562b31c9595d2ad0639033e8fdc
 vendor/lib64/vendor.qti.hardware.sigma_miracast@1.0.so|e34fca057b717343ee782826816baf230d684f89
 vendor/lib64/vendor.qti.hardware.wifidisplaysession@1.0.so|8c6a5c79f8f15db6f8f4123cba7079c98ba10b95
 
-# AV - from SMxx50 (10800) | QSSI (10400)
-system_ext/lib/extractors/libmmparserextractor.so|63f16bdce8088dc620f5de506c170ae2296e30ed
-system_ext/lib/libavenhancements.so|d044743eee1184a3400fad8e43dc3a1693cffb03
-system_ext/lib/libmmosal.so|175c890c965a14043777000cd2cfc20264b04810
-system_ext/lib/libmmparser_lite.so|078224d83480b7f69eb30e0d036e24fa3fb0e37a
--system_ext/lib/libqct_resampler.so|4186d11e0c418e7366422802635be68e21b9fca6
-system_ext/lib64/extractors/libmmparserextractor.so|ac4d39680610b6c1089d5b7b452ec0fa0c1986e0
-system_ext/lib64/libavenhancements.so|9445663f482dcc1265fc459d444732d94364097e
-system_ext/lib64/libmmosal.so|378098a961e465b5d14a29f5bc2320e10c88580c
-system_ext/lib64/libmmparser_lite.so|df8e602ebc12d150b2748c43ff0977fff4d25fd3
-
 # AV - from PNX_00WW_FIH-user-11-RKQ1.200906.002-00WW_6_100-release-keys
 vendor/lib/libmmosal.so|57185feced72009af2df1b09117702c9fae7182b
 vendor/lib64/libmmosal.so|e9fdb48163e92b089cea0c397723a8416436c272

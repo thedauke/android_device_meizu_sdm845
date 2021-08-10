@@ -183,11 +183,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.meizu_sdm845
 
-# Media
-PRODUCT_PACKAGES += \
-    libavservices_minijail_vendor \
-    libmediaplayerservice
-
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/media,$(TARGET_COPY_OUT_VENDOR)/etc)
 
@@ -310,7 +305,8 @@ PRODUCT_PACKAGES += \
 
 # QTI Common
 TARGET_COMMON_QTI_COMPONENTS := \
-    perf
+    perf \
+    av
 
 # FOD specific of crDroid
 EXTRA_FOD_ANIMATIONS := true
