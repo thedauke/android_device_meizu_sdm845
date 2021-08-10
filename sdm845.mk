@@ -175,30 +175,6 @@ PRODUCT_PACKAGES += \
     ipacm \
     IPACM_cfg.xml
 
-# IRQ
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
-
-# Perf
-PRODUCT_BOOT_JARS += \
-    QPerformance \
-    UxPerformance
-
-PRODUCT_PACKAGES += \
-    DisableQTIApps
-
-# Thermal
-PRODUCT_PACKAGES += \
-    android.hardware.thermal@2.0
-
-# TF lite
-PRODUCT_PACKAGES += \
-    libtflite
-
-# Service Tracker
-PRODUCT_PACKAGES += \
-    vendor.qti.hardware.servicetracker@1.2.vendor
-
 # IRSC
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
@@ -331,6 +307,10 @@ PRODUCT_PACKAGES += \
 # KeyHandler
 PRODUCT_PACKAGES += \
     KeyHandler
+
+# QTI Common
+TARGET_COMMON_QTI_COMPONENTS := \
+    perf
 
 # FOD specific of crDroid
 EXTRA_FOD_ANIMATIONS := true
