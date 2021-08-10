@@ -14,150 +14,126 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "vendor.aospa.power-service"
+#define LOG_TAG "vendor.aospa.power-service.meizu_sdm845"
 // #define LOG_NDEBUG 0
 
 #include "PowerFeature.h"
 
-#include <fcntl.h>
-#include <log/log.h>
-#include <unistd.h>
+#include <android-base/logging.h>
+#include <android-base/properties.h>
+#include <stdio.h>
+#include <stdint.h>
+
+using android::base::GetUintProperty;
+using android::base::SetProperty;
+
+#define GESTURE_CONTROL_PATH "/sys/class/meizu/tp/gesture_control"
+#define GESTURE_CONTROL_PROPERTY "vendor.aospa.gesture_control_value"
+
+#define SLIDE_LEFT_ENABLE   (1 << 0)
+#define SLIDE_RIGHT_ENABLE  (1 << 1)
+#define SLIDE_UP_ENABLE     (1 << 2)
+#define SLIDE_DOWN_ENABLE   (1 << 3)
+#define DOUBLE_TAP_ENABLE   (1 << 4)
+#define DRAW_W_ENABLE       (1 << 9)
+#define DRAW_M_ENABLE       (1 << 10)
+#define DRAW_O_ENABLE       (1 << 11)
+#define DRAW_S_ENABLE       (1 << 12)
+#define DRAW_V_ENABLE       (1 << 13)
+#define ALL_GESTURE_ENABLE  (1 << 31)
+
+namespace {
+static std::string hex(uint32_t value) {
+    char buf[9];
+    snprintf(buf, sizeof(buf), "%08x", value);
+    return buf;
+}
+
+static bool setGesture(uint32_t value, bool enabled) {
+    FILE *file = fopen(GESTURE_CONTROL_PATH, "wb");
+    if (!file) {
+        LOG(ERROR) << "setValue: Failed opening " << GESTURE_CONTROL_PATH;
+        return false;
+    }
+
+    uint32_t mMainGestureControl = GetUintProperty<uint32_t>(GESTURE_CONTROL_PROPERTY, 0x0);
+
+    mMainGestureControl &= ~ALL_GESTURE_ENABLE;
+
+    if (enabled) {
+      mMainGestureControl |= value;
+    } else {
+      mMainGestureControl &= ~value;
+    }
+
+    if (mMainGestureControl != 0) {
+        mMainGestureControl |= ALL_GESTURE_ENABLE;
+    }
+
+    uint8_t buf[4];
+    buf[0] = mMainGestureControl & 0xFF;
+    buf[1] = (mMainGestureControl >> 8) & 0xFF;
+    buf[2] = (mMainGestureControl >> 16) & 0xFF;
+    buf[3] = (mMainGestureControl >> 24) & 0xFF;
+
+    size_t ret = fwrite(buf, sizeof(buf), 1, file);
+    fclose(file);
+
+    LOG(INFO) << "setValue: " << hex(mMainGestureControl) << " " << ret;
+
+    SetProperty(GESTURE_CONTROL_PROPERTY, std::to_string(mMainGestureControl));
+
+    return true;
+}
+}  // anonymous namespace
 
 namespace aidl {
 namespace vendor {
 namespace aospa {
 namespace power {
 
-static constexpr int kInputEventWakeupModeOff = 4;
-static constexpr int kInputEventWakeupModeOn = 5;
-
 ndk::ScopedAStatus PowerFeature::setFeature(Feature feature, bool enabled) {
+    bool ret;
     switch (feature) {
-#ifdef GESTURES_NODE
-        case Feature::GESTURES:
-            sysFsWrite(GESTURES_NODE, enabled);
-            break;
-#endif
-#ifdef TAP_TO_WAKE_NODE
         case Feature::DOUBLE_TAP:
-            sysFsWrite(TAP_TO_WAKE_NODE, enabled);
+            ret = setGesture(DOUBLE_TAP_ENABLE, enabled);
             break;
-#elif defined(TAP_TO_WAKE_EVENT_NODE)
-        case Feature::DOUBLE_TAP:
-            input_event ev;
-            ev.type = EV_SYN;
-            ev.code = SYN_CONFIG;
-            ev.value = enabled ? kInputEventWakeupModeOn : kInputEventWakeupModeOff;
-            sysFsWrite(TAP_TO_WAKE_EVENT_NODE, &ev);
-            break;
-#endif
-#ifdef DRAW_V_NODE
         case Feature::DRAW_V:
-            sysFsWrite(DRAW_V_NODE, enabled);
+            ret = setGesture(DRAW_V_ENABLE, enabled);
             break;
-#endif
-#ifdef DRAW_INVERSE_V_NODE
-        case Feature::DRAW_INVERSE_V:
-            sysFsWrite(DRAW_INVERSE_V_NODE, enabled);
-            break;
-#endif
-#ifdef DRAW_O_NODE
         case Feature::DRAW_O:
-            sysFsWrite(DRAW_O_NODE, enabled);
+            ret = setGesture(DRAW_O_ENABLE, enabled);
             break;
-#endif
-#ifdef DRAW_M_NODE
         case Feature::DRAW_M:
-            sysFsWrite(DRAW_M_NODE, enabled);
+            ret = setGesture(DRAW_M_ENABLE, enabled);
             break;
-#endif
-#ifdef DRAW_W_NODE
         case Feature::DRAW_W:
-            sysFsWrite(DRAW_W_NODE, enabled);
+            ret = setGesture(DRAW_W_ENABLE, enabled);
             break;
-#endif
-#ifdef DRAW_ARROW_LEFT_NODE
-        case Feature::DRAW_ARROW_LEFT:
-            sysFsWrite(DRAW_ARROW_LEFT_NODE, enabled);
-            break;
-#endif
-#ifdef DRAW_ARROW_RIGHT_NODE
-        case Feature::DRAW_ARROW_RIGHT:
-            sysFsWrite(DRAW_ARROW_RIGHT_NODE, enabled);
-            break;
-#endif
-#ifdef ONE_FINGER_SWIPE_UP_NODE
         case Feature::ONE_FINGER_SWIPE_UP:
-            sysFsWrite(ONE_FINGER_SWIPE_UP_NODE, enabled);
+            ret = setGesture(SLIDE_UP_ENABLE, enabled);
             break;
-#endif
-#ifdef ONE_FINGER_SWIPE_RIGHT_NODE
         case Feature::ONE_FINGER_SWIPE_RIGHT:
-            sysFsWrite(ONE_FINGER_SWIPE_RIGHT_NODE, enabled);
+            ret = setGesture(SLIDE_RIGHT_ENABLE, enabled);
             break;
-#endif
-#ifdef ONE_FINGER_SWIPE_DOWN_NODE
         case Feature::ONE_FINGER_SWIPE_DOWN:
-            sysFsWrite(ONE_FINGER_SWIPE_DOWN_NODE, enabled);
+            ret = setGesture(SLIDE_DOWN_ENABLE, enabled);
             break;
-#endif
-#ifdef ONE_FINGER_SWIPE_LEFT_NODE
         case Feature::ONE_FINGER_SWIPE_LEFT:
-            sysFsWrite(ONE_FINGER_SWIPE_LEFT_NODE, enabled);
+            ret = setGesture(SLIDE_LEFT_ENABLE, enabled);
             break;
-#endif
-#ifdef TWO_FINGER_SWIPE_NODE
-        case Feature::TWO_FINGER_SWIPE:
-            sysFsWrite(TWO_FINGER_SWIPE_NODE, enabled);
-            break;
-#endif
-#ifdef DRAW_S_NODE
         case Feature::DRAW_S:
-            sysFsWrite(DRAW_S_NODE, enabled);
+            ret = setGesture(DRAW_S_ENABLE, enabled);
             break;
-#endif
-#ifdef SINGLE_TAP_TO_WAKE_NODE
-        case Feature::SINGLE_TAP:
-            sysFsWrite(SINGLE_TAP_TO_WAKE_NODE, enabled);
-            break;
-#endif
         default:
             return ndk::ScopedAStatus::fromServiceSpecificError(ENOTSUP);
     }
 
+    if (!ret) {
+        return ndk::ScopedAStatus::fromServiceSpecificError(EPERM); 
+    }
+
     return ndk::ScopedAStatus::ok();
-}
-
-void PowerFeature::sysFsWrite(const char *file_node, bool enabled) {
-    int fd, rc;
-    fd = open(file_node, O_WRONLY);
-    if (fd < 0) {
-        ALOGE("Failed to open %s, %d", file_node, fd);
-        return;
-    }
-
-    rc = write(fd, enabled ? "1" : "0", 1);
-    if (rc < 0) {
-        ALOGE("Failed to write \"%d\" to %s", enabled, file_node);
-    }
-
-    close(fd);
-}
-
-void PowerFeature::sysFsWrite(const char *file_node, const input_event *ev) {
-    int fd, rc;
-    fd = open(file_node, O_WRONLY);
-    if (fd < 0) {
-        ALOGE("Failed to open %s, %d", file_node, fd);
-        return;
-    }
-
-    rc = write(fd, ev, sizeof(*ev));
-    if (rc < 0) {
-        ALOGE("Failed to write \"%d\" to %s", ev->value, file_node);
-    }
-
-    close(fd);
 }
 
 }  // namespace power
