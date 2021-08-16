@@ -119,7 +119,6 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
 }
 
 Return<void> FingerprintInscreen::onPress() {
-    acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
     mFingerPressed = true;
     set(BOOST_ENABLE_PATH, 1);
     std::thread([this]() {
@@ -134,7 +133,6 @@ Return<void> FingerprintInscreen::onPress() {
 Return<void> FingerprintInscreen::onRelease() {
     mFingerPressed = false;
     this->mSteller->notifyHal(TOUCH_NOTIFY_FINGER_STATE, TOUCH_NOTIFY_FINGER_UP, CMD_FLAG);
-    release_wake_lock(LOG_TAG);
     return Void();
 }
 

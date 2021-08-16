@@ -15,5 +15,3 @@ get_prop(hal_aospa_inscreen_default, vendor_meizu_fp_prop)
 hal_client_domain(hal_aospa_inscreen_default, hal_fingerprint)
 
 r_dir_file(hal_aospa_inscreen_default, sysfs_graphics)
-
-wakelock_use(hal_aospa_inscreen_default)

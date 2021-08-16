@@ -2,5 +2,5 @@ service vendor.fingerprint-inscreen-1-0-meizu_sdm845 /vendor/bin/hw/vendor.aospa
     interface vendor.aospa.biometrics.fingerprint.inscreen@1.0::IFingerprintInscreen default
     class hal
     user system
-    group system wakelock input
+    group system input
     shutdown critical
