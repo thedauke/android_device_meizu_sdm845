@@ -12,7 +12,6 @@
 #include "KeyEventWatcher.h"
 
 #include <android-base/logging.h>
-#include <hardware_legacy/power.h>
 #include <hidl/HidlTransportSupport.h>
 #include <fstream>
 #include <cmath>
@@ -120,7 +119,6 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
 
 Return<void> FingerprintInscreen::onPress() {
     mFingerPressed = true;
-    set(BOOST_ENABLE_PATH, 1);
     std::thread([this]() {
         std::this_thread::sleep_for(std::chrono::milliseconds(NOTIFY_HAL_DELAY));
         if (mFingerPressed) {
@@ -193,6 +191,7 @@ void FingerprintInscreen::notifyKeyEvent(int value) {
     }
 
     if (value) {
+        set(BOOST_ENABLE_PATH, 1);
         Return<void> ret = mCallback->onFingerDown();
         if (!ret.isOk()) {
             LOG(ERROR) << "FingerDown() error: " << ret.description();
