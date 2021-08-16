@@ -239,14 +239,18 @@ def OTA_VerifyEnd(info, api_version, target_zip, source_zip=None):
 
 
 def FullOTA_Assertions(info):
-  #TODO: Implement device specific asserstions.
+  AddClearMeizuRoot(info)
   return
 
 
 def IncrementalOTA_Assertions(info):
-  #TODO: Implement device specific asserstions.
+  AddClearMeizuRoot(info)
   return
 
+
+def AddClearMeizuRoot(info):
+  info.script.AppendExtra('assert(meizu_sdm845.clear_mz_root() == "1" || abort("ERROR: Oops! Something gone wrong while clearing Meizu root! Please try to flash package.zip again!"););')
+  return
 
 def IncrementalOTA_VerifyEnd(info):
  OTA_VerifyEnd(info, info.target_version, info.target_zip, info.source_zip)
