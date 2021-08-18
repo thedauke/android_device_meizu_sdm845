@@ -63,9 +63,14 @@ typedef struct vibrator_device {
      */
     int (*vibrator_off)(struct vibrator_device* vibradev);
 
-#ifdef MEIZU_HACK
-    int (*vibrator_perform_effect)(struct vibrator_device* vibradev, uint32_t effect, uint8_t strength);
-#endif
+
+    /** Run Meizu specific aw8691 mode (haptic vibrator effect)
+     *
+     * @param effect_id number of id of haptics effect (e.g. 31009 - Coin Ring Effect)
+     * 
+     * @return 0 in case of success, negative errno code else
+     */
+    int (*vibrator_perform_effect)(struct vibrator_device* vibradev, unsigned int effect_id);
 } vibrator_device_t;
 
 static inline int vibrator_open(const struct hw_module_t* module, vibrator_device_t** device)

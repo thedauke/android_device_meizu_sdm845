@@ -94,9 +94,8 @@ Return<void> Vibrator::perform_1_3(Effect effect, EffectStrength strength, perfo
 
 // Private methods follow.
 
-Return<void> Vibrator::perform(Effect effect, EffectStrength strength, perform_cb _hidl_cb) {
-    uint32_t id;
-    uint8_t strn;
+Return<void> Vibrator::perform(Effect effect, EffectStrength strength __unused, perform_cb _hidl_cb) {
+    unsigned int id;
     Status status = Status::OK;
 
     switch (effect) {
@@ -125,19 +124,7 @@ Return<void> Vibrator::perform(Effect effect, EffectStrength strength, perform_c
             return Void();
     }
 
-    switch (strength) {
-        case EffectStrength::LIGHT:
-            strn = 50;
-            break;
-        case EffectStrength::MEDIUM:
-            strn = 120;
-            break;
-        case EffectStrength::STRONG:
-            strn = 255;
-            break;
-    }
-
-    int32_t ret = mDevice->vibrator_perform_effect(mDevice, id, strn);
+    int32_t ret = mDevice->vibrator_perform_effect(mDevice, id);
     if (ret != 0) {
         LOG(ERROR) << "Perform: command failed: " << strerror(-ret);
         status = Status::UNKNOWN_ERROR;
@@ -145,8 +132,7 @@ Return<void> Vibrator::perform(Effect effect, EffectStrength strength, perform_c
         return Void();
     }
 
-    LOG(INFO) << "Perform: Effect " << toString(effect) << " (" << toString(strength)  << ")"
-              << " => " << id << " (" << (int) strn << ")";
+    LOG(INFO) << "Perform: Effect " << toString(effect) << " => " << id;
 
     _hidl_cb(status, 200);
 

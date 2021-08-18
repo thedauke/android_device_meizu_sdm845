@@ -2,6 +2,7 @@ genfscon sysfs /devices/platform/mx-gs/gesture_control                          
 genfscon sysfs /devices/platform/soc/88c000.i2c/i2c-1/1-0026/sleep                       u:object_r:sysfs_cspress:s0
 genfscon sysfs /devices/platform/soc/89c000.i2c/i2c-3/3-005a/enable                      u:object_r:sysfs_vibrator:s0
 genfscon sysfs /devices/platform/soc/89c000.i2c/i2c-3/3-005a/on_off                      u:object_r:sysfs_vibrator:s0
+genfscon sysfs /devices/platform/soc/89c000.i2c/i2c-3/3-005a/rtp                         u:object_r:sysfs_vibrator:s0
 genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-03/c440000.qcom,spmi:qcom,pmi8998@3:qcom,leds@d000/leds/breath/blink        u:object_r:sysfs_light:s0
 genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-02/c440000.qcom,spmi:qcom,pmi8998@2:rradc@4500/iio:device0/name             u:object_r:sysfs_iio:s0
 genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display@17/display/lut                 u:object_r:sysfs_livedisplay:s0
