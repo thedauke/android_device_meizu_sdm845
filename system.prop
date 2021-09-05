@@ -76,6 +76,12 @@ persist.vendor.data.mode=concurrent
 persist.vendor.overlay.izat.optin=rro
 persist.backup.ntpServer="0.pool.ntp.org"
 
+# LMK
+ro.lmk.kill_heaviest_task=true
+ro.lmk.enable_watermark_check=true
+ro.lmk.kill_timeout_ms=0
+ro.lmk.use_minfree_levels=false
+
 # Misc
 debug.mdpcomp.logs=0
 dev.pm.dyn_samplingrate=1

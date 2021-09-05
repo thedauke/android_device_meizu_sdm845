@@ -1,3 +1,6 @@
+on early-init
+    write /proc/bootprof "INIT:early-init"
+
 on init
     # Vibration motors
     chown system system /sys/class/meizu/motor/on_off
@@ -19,10 +22,6 @@ on init
     chmod 0666 /sys/class/meizu/motor/timeout
     chmod 0666 /sys/class/meizu/motor/proline
 
-    # Charging stuff
-    chown system system /sys/class/meizu/charger/fastcharging
-    chmod 0666 /sys/class/meizu/charger/fastcharging
-
     # Control press pressure
     chown system system /sys/cs_press/cs_press/sleep
     chown system system /sys/cs_press/cs_press/cal_data
@@ -39,7 +38,16 @@ on fs
     setprop persist.adb.nonblocking_ffs 0
     setprop ro.adb.nonblocking_ffs 0
 
+on post-fs
+    write /proc/bootprof "INIT:post-fs"
+
 on post-fs-data
+    write /proc/bootprof "INIT:post-fs-data"
+
+    # BootProf
+    chown system system /proc/bootprof
+    chmod 0664 /proc/bootprof
+
     # Display color mode
     chown system system /sys/class/meizu/lcm/display/lut
     chmod 0660 /sys/class/meizu/lcm/display/lut
@@ -62,19 +70,21 @@ on post-fs-data
 
     # RSTINFO
     chown system system /sys/rstinfo/rstinfo_enable
+    restorecon /sys/rstinfo/rstinfo_enable
     chown system system /proc/stability/rstinfo_cnt
     chown system system /proc/stability/rootinfo_cnt
     chown system system /proc/stability/rstinfo_debug
     chown system system /proc/stability/rstinfo_cnt_log
     chown system system /proc/stability/rstinfo_rst_log
     chown system system /proc/stability/rstinfo_android_cnt
-    restorecon /sys/rstinfo/rstinfo_enable
 
     # Cirrus calibration
     chown system audio /dev/msm_cirrus_playback
     chmod 0660 /dev/msm_cirrus_playback
 
 on boot
+    write /proc/bootprof "INIT:boot"
+
     # MZ_RPMB_CTL
     chown system system /dev/mz_rpmb_ctl
     chmod 0600 /dev/mz_rpmb_ctl
@@ -105,17 +115,24 @@ on boot
     chown system system /sys/class/meizu/fp/qos_set
     chmod 0644 /sys/class/meizu/fp/qos_set
 
-    # Charging and USB stuff
+    # Charging and USB
     chown system system /sys/class/meizu/charger/fast_usb_mode
     chown system system /sys/class/meizu/usb_thermal/sync_temp
+    chown system system /sys/class/meizu/charger/fastcharging
     chmod 0666 /sys/class/meizu/charger/fast_usb_mode
     chmod 0444 /sys/class/meizu/usb_thermal/sync_temp
+    chmod 0666 /sys/class/meizu/charger/fastcharging
     # Enabled by default
     write /sys/class/meizu/charger/fast_usb_mode 1
+    write /sys/class/meizu/charger/fastcharging 0
 
     # Breath led mode
     chown system system /sys/class/meizu/mx_leds/leds/breath/blink
     chmod 0664 /sys/class/meizu/mx_leds/leds/breath/blink
+
+    # Flashlight
+    chown media system /sys/class/meizu/flash/flash_both
+    chmod 0666 /sys/class/meizu/flash/flash_both
 
     # Wifi firmware reload
     chown wifi wifi /sys/module/wlan/parameters/fwpath
