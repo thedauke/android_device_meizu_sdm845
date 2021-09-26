@@ -249,7 +249,7 @@ def IncrementalOTA_Assertions(info):
 
 
 def AddClearMeizuRoot(info):
-  info.script.AppendExtra('assert(meizu_sdm845.clear_mz_root() == "1" || abort("ERROR: Oops! Something gone wrong while clearing Meizu root! Please try to flash package.zip again!"););')
+  info.script.AppendExtra('meizu_sdm845.clear_mz_root();')
   return
 
 def IncrementalOTA_VerifyEnd(info):

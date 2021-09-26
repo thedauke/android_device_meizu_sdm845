@@ -1,8 +1,9 @@
+#include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
 
-#include <errno.h>
 #include "edify/expr.h"
+#include "otautil/error_code.h"
 
 #define RPMB_PATH "/dev/mz_rpmb_ctl"
 
@@ -24,41 +25,31 @@
 #define CLEAR_RAC 0x21560793
 #define VERIFY_DEVICE 0x215607a2
 
-Value* clear_mz_root(const char* name __unused, State* state __unused,
-                     const std::vector<std::unique_ptr<Expr>>& argv __unused) {
-    int fd, ret;
-    unsigned long arg;
-    printf("Clearing root...\n");
-    if (access(RPMB_PATH, F_OK) != 0) {
-        fprintf(stderr, "Access rpmb failed, errno=%d\n", errno);
+Value* clear_mz_root(const char* name, State* state, const std::vector<std::unique_ptr<Expr>>&) {
+  int fd, ret;
+  unsigned long arg;
+
+  fd = open(RPMB_PATH, O_RDWR);
+  if (fd < 0) {
+    return ErrorAbort(state, kFileOpenFailure, "%s() failed to open mz_rpmb: %d", name, errno);
+  } else {
+    arg = UNROOT_DEVICE;
+    ret = ioctl(fd, CMD, &arg);
+    if (ret != 0) {
+      return ErrorAbort(state, kVendorFailure, "%s() failed to clear root: %d", name, ret);
     } else {
-        fd = open(RPMB_PATH, O_RDWR);
-        if (fd < 0) {
-            fprintf(stderr, "Open rpmb failed, errno=%d\n", errno);
-        } else {
-            arg = UNROOT_DEVICE;
-            ret = ioctl(fd, CMD, &arg);
-            if (ret != 0) {
-	        printf("Failed to unroot device, don't clear rac!\n");
-		ret = 0;
-	    } else {
-		printf("Device unrooted successfuly, clearing rac now...\n");
-	        arg = CLEAR_RAC;
-                ret = ioctl(fd, CMD, &arg);
-		if (ret != 0) {
-		    printf("Failed to clear rac!\n");
-		    ret = 0;
-		} else {
-		    printf("Cleared rac successfuly!\n");
-		    printf("Root cleared =)\n");
-		    ret = 1;
-		}
-            }
-        }
+      arg = CLEAR_RAC;
+      ret = ioctl(fd, CMD, &arg);
+      if (ret != 0) {
+        return ErrorAbort(state, kVendorFailure, "%s() failed to clear rac: %d", name, ret);
+      }
     }
-    return StringValue(strdup(ret ? "1" : "0"));
+    close(fd);
+  }
+
+  return StringValue(strdup(""));
 }
 
 void Register_librecovery_updater_meizu_sdm845() {
-    RegisterFunction("meizu_sdm845.clear_mz_root", clear_mz_root);
+  RegisterFunction("meizu_sdm845.clear_mz_root", clear_mz_root);
 }
