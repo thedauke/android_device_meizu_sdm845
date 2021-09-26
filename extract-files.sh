@@ -72,14 +72,28 @@ fi
 
 function blob_fixup() {
     case "${1}" in
+    etc/vstab_db_0_720p_video_30fps.config | etc/vstab_db_0_4k_video_30fps.config | etc/vstab_db_0_1080p_video_30fps.config | vendor/lib/camera/components/com.arcsoft.node.realtimebokeh.so | vendor/lib/camera/components/com.qti.stats.pdlib.so | vendor/lib/camera/components/com.arcsoft.node.capturebokeh.so | vendor/lib/camera/components/com.arcsoft.node.picauto.so | vendor/lib/camera/components/com.arcsoft.node.hdr.so | vendor/lib/camera/components/com.qti.stats.aec.so | vendor/lib/camera/components/com.arcsoft.node.beauty.so | vendor/lib/camera/components/com.arcsoft.node.smoothtransition.so | vendor/lib/camera/components/com.arcsoft.node.lowlighthdr.so | vendor/lib/libarcsoft_dualcam_refocus.so | vendor/lib/hw/com.qti.chi.override.so)
+        sed -i "s|/data/misc/camera|/data/vendor/camx|g" "${2}"
+        ;;
     vendor/bin/hw/vendor.display.color@1.0-service | vendor/bin/hw/vendor.qti.hardware.qteeconnector@1.0-service | vendor/lib/vendor.display.postproc@1.0_vendor.so)
         patchelf --remove-needed "android.hidl.base@1.0.so" "${2}"
+        ;;
+    vendor/lib/hw/audio.primary.sdm845.so | vendor/lib64/hw/audio.primary.sdm845.so)
+        if [ -z $(patchelf --print-needed "${2}" | grep "libprocessgroup.so") ]; then
+            patchelf --add-needed "libprocessgroup.so" "${2}"
+        fi
+        ;;
+    vendor/lib/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so | vendor/lib64/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so)
+        patchelf --remove-needed "libicuuc.so" "${2}"
         ;;
     vendor/lib64/hw/vendor.qti.hardware.sensorscalibrate@1.0-impl.so)
         sed -i "s|libbase.so|libbv28.so|g" "${2}"
         ;;
-    vendor/lib/hw/camera.qcom.so)
-        sed -i "s|libssc.so|libSSc.so|g" "${2}"
+    vendor/bin/hw/vendor.qti.hardware.qdutils_disp@1.0-service-qti)
+        sed -i "s|libgui.so|libwui.so|g" "${2}"
+        ;;
+    vendor/lib/camera/components/com.inv.node.eis.so)
+        sed -i "s|libgui.so|libwui.so|g" "${2}"
         sed -i "s|/data/misc/camera|/data/vendor/camx|g" "${2}"
         ;;
     vendor/lib/libmms_warper_vstab.so)
@@ -91,30 +105,13 @@ function blob_fixup() {
         if [ -z $(patchelf --print-needed "${2}" | grep "libshim_camera.so") ]; then
             patchelf --add-needed "libshim_camera.so" "${2}"
         fi
-        sed -i "s|/data/misc/camera|/data/vendor/camx|g" "${2}"
-        sed -i "s|libgui.so|libwui.so|g" "${2}"
         patchelf --remove-needed "libandroid.so" "${2}"
-        ;;
-    vendor/lib/camera/components/com.inv.node.eis.so)
-        if [ -z $(patchelf --print-needed "${2}" | grep "libprotobuf-cpp-full-vendor-3.9.1.so") ]; then
-            patchelf --add-needed "libprotobuf-cpp-full-vendor-3.9.1.so" "${2}"
-        fi
         sed -i "s|libgui.so|libwui.so|g" "${2}"
         sed -i "s|/data/misc/camera|/data/vendor/camx|g" "${2}"
         ;;
-    etc/vstab_db_0_720p_video_30fps.config | etc/vstab_db_0_4k_video_30fps.config | etc/vstab_db_0_1080p_video_30fps.config | vendor/lib/camera/components/com.arcsoft.node.realtimebokeh.so | vendor/lib/camera/components/com.qti.stats.pdlib.so | vendor/lib/camera/components/com.arcsoft.node.capturebokeh.so | vendor/lib/camera/components/com.arcsoft.node.picauto.so | vendor/lib/camera/components/com.arcsoft.node.hdr.so | vendor/lib/camera/components/com.qti.stats.aec.so | vendor/lib/camera/components/com.arcsoft.node.beauty.so | vendor/lib/camera/components/com.arcsoft.node.smoothtransition.so | vendor/lib/camera/components/com.arcsoft.node.lowlighthdr.so | vendor/lib/libarcsoft_dualcam_refocus.so | vendor/lib/hw/com.qti.chi.override.so)
+    vendor/lib/hw/camera.qcom.so)
+        sed -i "s|libssc.so|libSSc.so|g" "${2}"
         sed -i "s|/data/misc/camera|/data/vendor/camx|g" "${2}"
-        ;;
-    vendor/bin/hw/vendor.qti.hardware.qdutils_disp@1.0-service-qti)
-        sed -i "s|libgui.so|libwui.so|g" "${2}"
-        ;;
-    vendor/lib/hw/audio.primary.sdm845.so | vendor/lib64/hw/audio.primary.sdm845.so)
-        if [ -z $(patchelf --print-needed "${2}" | grep "libprocessgroup.so") ]; then
-            patchelf --add-needed "libprocessgroup.so" "${2}"
-        fi
-        ;;
-    vendor/lib/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so | vendor/lib64/hw/vendor.qti.hardware.qteeconnector@1.0-impl.so)
-        patchelf --remove-needed "libicuuc.so" "${2}"
         ;;
     esac
 }
