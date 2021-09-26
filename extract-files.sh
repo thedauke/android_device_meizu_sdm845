@@ -100,6 +100,7 @@ function blob_fixup() {
         if [ -z $(patchelf --print-needed "${2}" | grep "libshim_camera.so") ]; then
             patchelf --add-needed "libshim_camera.so" "${2}"
         fi
+        patchelf --remove-needed "libandroid.so" "${2}"
         ;;
     vendor/lib/libmms_hal_vstab.so)
         if [ -z $(patchelf --print-needed "${2}" | grep "libshim_camera.so") ]; then
