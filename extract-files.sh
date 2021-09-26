@@ -122,7 +122,7 @@ function blob_fixup() {
 # Initialize the helper
 setup_vendor "${DEVICE_COMMON}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}"
 
-extract "${MY_DIR}/proprietary-files-common.txt" "${SRC}" ${KANG} --section "${SECTION}"
+extract "${MY_DIR}/proprietary-files-sdm845.txt" "${SRC}" ${KANG} --section "${SECTION}"
 
 if [ -n "${DEVICE}" ]; then
     # Reinitialize the helper for device

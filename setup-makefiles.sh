@@ -56,7 +56,7 @@ setup_vendor "$DEVICE_COMMON" "$VENDOR" "$ANDROID_ROOT" true
 # Copyright headers and guards
 write_headers "m1882 m1892"
 
-write_makefiles "${MY_DIR}/proprietary-files-common.txt" true
+write_makefiles "${MY_DIR}/proprietary-files-sdm845.txt" true
 
 # Finish
 write_footers

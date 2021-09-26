@@ -19,27 +19,55 @@
 from hashlib import sha1
 import sys
 
-device_list = ['common', 'm1882', 'm1892']
-vendor = 'meizu'
 
-choice = input(
-    f"Type proprietary list area (without brackets)\n'{device_list[0]}' for sdm845\n'{device_list[1]}' for 16th\n'{device_list[2]}' for 16thPlus\n")
-
-if choice == device_list[0]:
-    target_file = 'proprietary-files-common.txt'
-    device = 'sdm845'
-elif choice == device_list[1]:
-    target_file = 'm1882/proprietary-files-m1882.txt'
-    device = 'm1882'
-elif choice == device_list[2]:
-    target_file = 'm1892/proprietary-files-m1892.txt'
-    device = 'm1892'
-else:
-    sys.exit('Nonexistent proprietary list area!\nExiting!')
-
-lines = [line for line in open(target_file, 'r')]
-vendorPath = '../../../vendor/' + vendor + '/' + device + '/proprietary'
+target_list = {
+    'sdm845': {
+        'file': 'proprietary-files-sdm845.txt',
+        'device': 'sdm845'
+    },
+    'm1882': {
+        'file': 'm1882/proprietary-files-m1882.txt',
+        'device': 'm1882'
+    },
+    'm1892': {
+        'file': 'm1892/proprietary-files-m1892.txt',
+        'device': 'm1892'
+    }
+}
 needSHA1 = False
+
+
+def query_yes_no(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    "question" is a string that is presented to the user.
+    "default" is the presumed answer if the user just hits <Enter>.
+            It must be "yes" (the default), "no" or None (meaning
+            an answer is required of the user).
+
+    The "answer" return value is True for "yes" or False for "no".
+
+    https://stackoverflow.com/a/3041990
+    """
+    valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+
+    while True:
+        sys.stdout.write(question + prompt)
+        choice = input().lower()
+        if default is not None and choice == "":
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' " "(or 'y' or 'n').\n")
 
 
 def cleanup():
@@ -85,13 +113,17 @@ def update():
             lines[index] = '%s|%s\n' % (line, hash)
 
 
-if len(sys.argv) == 2 and sys.argv[1] == '-c':
-    cleanup()
-else:
-    update()
+for target in target_list:
+    if not query_yes_no('Update sha1sum for ' + target_list[target]['file'] + '?'):
+        continue
+    lines = [line for line in open(target_list[target]['file'], 'r')]
+    vendorPath = '../../../vendor/meizu/' + target_list[target]['device'] + '/proprietary'
 
-with open(target_file, 'w') as file:
-    for line in lines:
-        file.write(line)
-
-    file.close()
+    if len(sys.argv) == 2 and sys.argv[1] == '-c':
+        cleanup()
+    else:
+        update()
+    
+    with open(target_list[target]['file'], 'w') as file:
+        for line in lines:
+            file.write(line)
