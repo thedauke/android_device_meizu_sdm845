@@ -23,6 +23,7 @@
 #include <android-base/strings.h>
 #include <hardware/hardware.h>
 #include <hardware/hw_auth_token.h>
+#include <dlfcn.h>
 #include <inttypes.h>
 #include <unistd.h>
 
@@ -37,6 +38,10 @@ namespace implementation {
 
 // Supported fingerprint HAL version
 static const uint16_t kVersion = HARDWARE_MODULE_API_VERSION(2, 1);
+
+static int (*gf_hal_test_cmd)(int, int32_t cmd, int, int);
+static char *fp_vendor = strdup("unknown");
+static void *gf_hal;
 
 using RequestStatus = android::hardware::biometrics::fingerprint::V2_1::RequestStatus;
 
@@ -228,7 +233,6 @@ IBiometricsFingerprint* BiometricsFingerprint::getInstance() {
 
 void setFpVendorProp(const std::string& fp_vendor) {
     SetProperty("persist.vendor.sys.fp.vendor", fp_vendor);
-    SetProperty("vendor.meizu.fp_vendor", fp_vendor);
 }
 
 fingerprint_device_t* getDeviceForVendor(const char* class_name) {
@@ -274,17 +278,48 @@ fingerprint_device_t* getDeviceForVendor(const char* class_name) {
 
 fingerprint_device_t* getFingerprintDevice() {
     fingerprint_device_t* fp_device;
+    char lcd_id[8];
 
-    fp_device = getDeviceForVendor("syna");
-    if (fp_device == nullptr) {
-        ALOGE("Failed to load synaptics fingerprint module");
+    int fd = open("/proc/mz_info/lcd_id", O_RDONLY);
+    read(fd, &lcd_id, 8);
+    close(fd);
+    ALOGI("the lcd id is %s", lcd_id);
+
+    if (lcd_id[5] == '5') {
+        ALOGD("This display panel is for synaptics fingerprint");
+        fp_vendor = strdup("synaptics");
+    } else if (lcd_id[5] == '8') {
+        ALOGD("This display panel is for goodix fingerprint");
+        fp_vendor = strdup("goodix");
     } else {
-        setFpVendorProp("synaptics");
+        ALOGE("This display panel is for nothing");
+        goto fail;
+    }
+
+    fp_device = getDeviceForVendor(fp_vendor);
+    if (fp_device == nullptr) {
+        ALOGE("Failed to load %s fingerprint module", fp_vendor);
+    } else {
+        if (!strcmp(fp_vendor, "goodix")) {
+            gf_hal = dlopen("/vendor/lib64/libgf_hal.so", RTLD_NOW);
+            if (!gf_hal) {
+                ALOGE("Failed to load libgf_hal.so library, error: %s", dlerror());
+                goto fail;
+            } else {
+                gf_hal_test_cmd = (int (*)(int, int32_t, int, int)) dlsym(gf_hal, "gf_hal_test_cmd");
+                if (!gf_hal_test_cmd) {
+                    ALOGE("Failed to get gf_hal_test_cmd symbol, error: %s", dlerror());
+                    goto fail;
+                }
+                ALOGI("libgf_hal.so loaded");
+            }
+        }
+        setFpVendorProp(fp_vendor);
         return fp_device;
     }
 
-    setFpVendorProp("none");
-
+fail:
+    setFpVendorProp("unknown");
     return nullptr;
 }
 
@@ -390,9 +425,50 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
     }
 }
 
-Return<void> BiometricsFingerprint::notifyHal(int32_t type, int32_t cmd, int32_t flag) {
-    mDevice->customHalExtSendCmd(mDevice, type, cmd, flag);
-    return Void();
+Return<int32_t> BiometricsFingerprint::stellerNotify(int32_t cmd, int32_t data) {
+    if (!strcmp(fp_vendor, "goodix")) return 0;
+    switch(cmd) {
+        case 1:
+            cmd = 0x7f16;
+            data = 0;
+            break;
+        case 2:
+            cmd = 0x7f16;
+            data = 1;
+            break;
+        case 3:
+            cmd = 0x7f05;
+            data = 1;
+            break;
+        case 4:
+            cmd = 0x7f05;
+            data = 0;
+            break;
+        case 5:
+            cmd = 0x7f17;
+            break;
+        case 7:
+            cmd = 0x7f1b;
+            break;
+        default:
+            return 0;
+    }
+    return mDevice->customerHalExtSendCmd(mDevice, cmd, data, 0);
+}
+
+Return<int32_t> BiometricsFingerprint::goodixNotify(int32_t cmd) {
+    if (!strcmp(fp_vendor, "synaptics")) return 0;
+    switch(cmd) {
+        case 1:
+            cmd = 0x32;
+            break;
+        case 2:
+            cmd = 0x33;
+            break;
+        default:
+            return 0;
+    }
+    return gf_hal_test_cmd(0, cmd, 0, 0);
 }
 
 }  // namespace implementation

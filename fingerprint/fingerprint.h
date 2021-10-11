@@ -261,9 +261,10 @@ typedef struct fingerprint_device {
     int (*authenticate)(struct fingerprint_device* dev, uint64_t operation_id, uint32_t gid);
 
     /**
-     * Call a Synaptics function for custom biometrics HAL command.
+     * Meizu specific proprietary fingerprint commands for synaptics
      */
-    void (*customHalExtSendCmd)(struct fingerprint_device* dev, int32_t type, int32_t cmd, int32_t flag);
+    int (*customerHalExtSendCmd)(struct fingerprint_device* dev, int32_t type, int32_t cmd, int);
+    int (*GoodixNotify)(int, int32_t type, int32_t cmd, nullptr_t, int);
 
     /* Reserved for backward binary compatibility */
     void* reserved[4];

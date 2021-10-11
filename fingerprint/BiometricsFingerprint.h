@@ -24,6 +24,7 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <log/log.h>
+#include <vendor/goodix/hardware/biometrics/fingerprint/2.1/IGoodixFingerprintDaemon.h>
 #include <vendor/synaptics/fingerprint/interfaces/extensions/1.0/ISteller.h>
 
 #include "fingerprint.h"
@@ -44,9 +45,10 @@ using ::android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprint
 using ::android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprintClientCallback;
 using ::android::hardware::biometrics::fingerprint::V2_1::RequestStatus;
 
+using ::vendor::goodix::hardware::biometrics::fingerprint::V2_1::IGoodixFingerprintDaemon;
 using ::vendor::synaptics::fingerprint::interfaces::extensions::V1_0::ISteller;
 
-struct BiometricsFingerprint : public IBiometricsFingerprint, public ISteller {
+struct BiometricsFingerprint : public IBiometricsFingerprint, public ISteller, public IGoodixFingerprintDaemon {
     BiometricsFingerprint();
     ~BiometricsFingerprint();
 
@@ -69,7 +71,11 @@ struct BiometricsFingerprint : public IBiometricsFingerprint, public ISteller {
     Return<RequestStatus> setActiveGroup(uint32_t gid, const hidl_string& storePath) override;
     Return<RequestStatus> authenticate(uint64_t operationId, uint32_t gid) override;
 
-    Return<void> notifyHal(int32_t type, int32_t cmd, int32_t flag);
+    // Methods from ::vendor::synaptics::fingerprint::interfaces::extensions::V1_0::ISteller follow.
+    Return<int32_t> stellerNotify(int32_t cmd, int32_t data);
+
+    // Methods from ::vendor::goodix::hardware::biometrics::fingerprint::V2_1::IGoodixFingerprintDaemon follow.
+    Return<int32_t> goodixNotify(int32_t cmd);
 
     static fingerprint_device_t* openHal();
     static void notify(

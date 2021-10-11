@@ -42,6 +42,14 @@ status_t BiometricsFingerprint::registerAsSystemService() {
         ALOGI("Successfully registered IBiometricsFingerprint");
     }
 
+    ret = IGoodixFingerprintDaemon::registerAsService();
+    if (ret != 0) {
+        ALOGE("Failed to register IGoodixFingerprintDaemon (%d)", ret);
+        goto fail;
+    } else {
+        ALOGI("Successfully registered IGoodixFingerprintDaemon");
+    }
+
     ret = ISteller::registerAsService();
     if (ret != 0) {
         ALOGE("Failed to register ISteller (%d)", ret);
