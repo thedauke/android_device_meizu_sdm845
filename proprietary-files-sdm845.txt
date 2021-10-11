@@ -358,8 +358,15 @@ vendor/firmware/mzfp64.b07
 vendor/firmware/mzfp64.mdt
 
 # Fingerprint - Synaptics
-vendor/lib64/hw/fingerprint.syna.so:vendor/lib64/hw/fingerprint.syna.sdm845.so
+vendor/lib64/hw/fingerprint.syna.so:vendor/lib64/hw/fingerprint.synaptics.sdm845.so
 vendor/lib64/libvfmtztransport.so
+
+# Fingerprint - Goodix
+vendor/lib64/hw/fingerprint.goodix.so:vendor/lib64/hw/fingerprint.goodix.sdm845.so
+vendor/lib64/libgoodixhwfingerprint.so  
+vendor/lib64/libvendor.goodix.hardware.biometrics.fingerprint@2.1.so
+vendor/lib64/libgf_hal.so
+vendor/lib64/libgf_ca.so
 
 # Gatekeeper
 vendor/bin/hw/android.hardware.gatekeeper@1.0-service-qti
@@ -492,6 +499,9 @@ vendor/firmware/ipa_fws.elf
 vendor/firmware/ipa_fws.mdt
 
 # Keymaster
+lib64/libkeymaster_messages.so:vendor/lib64/libkeymaster_messages-goodix.so
+lib64/libkeymaster_portable.so:vendor/lib64/libkeymaster_portable-goodix.so
+lib64/libsoftkeymasterdevice.so:vendor/lib64/libsoftkeymasterdevice-goodix.so
 vendor/bin/hw/android.hardware.keymaster@3.0-service-qti
 vendor/etc/init/android.hardware.keymaster@3.0-service-qti.rc
 vendor/lib/hw/android.hardware.keymaster@3.0-impl-qti.so

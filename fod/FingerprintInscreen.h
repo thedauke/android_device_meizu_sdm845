@@ -10,6 +10,7 @@
 #define VENDOR_AOSPA_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
 
 #include <vendor/aospa/biometrics/fingerprint/inscreen/1.0/IFingerprintInscreen.h>
+#include <vendor/goodix/hardware/biometrics/fingerprint/2.1/IGoodixFingerprintDaemon.h>
 #include <vendor/synaptics/fingerprint/interfaces/extensions/1.0/ISteller.h>
 
 namespace vendor {
@@ -25,6 +26,7 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::hardware::hidl_vec;
 
+using ::vendor::goodix::hardware::biometrics::fingerprint::V2_1::IGoodixFingerprintDaemon;
 using ::vendor::synaptics::fingerprint::interfaces::extensions::V1_0::ISteller;
 
 class FingerprintInscreen : public IFingerprintInscreen {
@@ -48,6 +50,7 @@ class FingerprintInscreen : public IFingerprintInscreen {
     Return<void> setCallback(const sp<IFingerprintInscreenCallback>& callback) override;
 
   private:
+    sp<IGoodixFingerprintDaemon> mGoodixFingerprintDaemon;
     sp<ISteller> mSteller;
 
     std::mutex mCallbackLock;
