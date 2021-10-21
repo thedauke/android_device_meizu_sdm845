@@ -278,11 +278,15 @@ fingerprint_device_t* getDeviceForVendor(const char* class_name) {
 
 fingerprint_device_t* getFingerprintDevice() {
     fingerprint_device_t* fp_device;
-    char lcd_id[8];
+    char lcd_id[9];
 
     int fd = open("/proc/mz_info/lcd_id", O_RDONLY);
     read(fd, &lcd_id, 8);
     close(fd);
+    
+    // set proper charstring end
+    lcd_id[8] = '\0';
+
     ALOGI("the lcd id is %s", lcd_id);
 
     if (lcd_id[5] == '5') {
