@@ -15,8 +15,7 @@ AM_MAINTAINER_MODE
 # defines some macros variable to be included by source
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
-AC_SUBST([COMMON_CFLAGS], [-Wall -Werror -Wno-sign-conversion -Wconversion -DDEBUG_CALC_FPS])
-AC_SUBST([AM_CPPFLAGS], [--std=c++11])
+AC_SUBST([AM_CPPFLAGS], [COMMON_CFLAGS], [-Wall -Werror -Wno-sign-conversion -Wconversion -DDEBUG_CALC_FPS])
 
 AC_ARG_WITH([core_includes],
     AC_HELP_STRING([--with-core-includes=@<:@dir@:>@],
