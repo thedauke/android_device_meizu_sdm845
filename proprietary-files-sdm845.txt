@@ -248,28 +248,6 @@ bin/charger:bin/meizu_charger|2b8dbbce5530114b4cdef606eb27033cfe33c79a
 lib/libdexfile_support.so:vendor/apex/com.android.vndk.current.on_vendor/lib/libdexfile_support.so|7d9aa3f88a014f0ef8a0e843e4b46a9f59064ab5
 lib64/libdexfile_support.so:vendor/apex/com.android.vndk.current.on_vendor/lib64/libdexfile_support.so|b9969fc91fd81cf47a3de323257e1957ef8872a6
 
-# Display - HAL
-vendor/lib/hw/gralloc.sdm845.so
-vendor/lib/hw/hwcomposer.sdm845.so
-vendor/lib/libdrmutils.so
-vendor/lib/libgrallocutils.so
-vendor/lib/libqdMetaData.so
-vendor/lib/libqdutils.so
-vendor/lib/libsdmcore.so
-vendor/lib/libsdmutils.so
-vendor/lib/vendor.display.config@1.0_vendor.so
-vendor/lib/vendor.display.config@1.1_vendor.so
-vendor/lib64/hw/gralloc.sdm845.so
-vendor/lib64/hw/hwcomposer.sdm845.so
-vendor/lib64/libdrmutils.so
-vendor/lib64/libgrallocutils.so
-vendor/lib64/libqdMetaData.so
-vendor/lib64/libqdutils.so
-vendor/lib64/libsdmcore.so
-vendor/lib64/libsdmutils.so
-vendor/lib64/vendor.display.config@1.0_vendor.so
-vendor/lib64/vendor.display.config@1.1_vendor.so
-
 # DRM
 product/lib/libGPTEE_system.qti.so
 product/lib/libQTEEConnector_system.so
