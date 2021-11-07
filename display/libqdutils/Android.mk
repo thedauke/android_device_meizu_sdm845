@@ -31,7 +31,8 @@ LOCAL_CFLAGS                    := $(common_flags) -Wno-sign-conversion
 LOCAL_CFLAGS                    += -DLOG_TAG=\"DisplayMetaData\"
 
 LOCAL_MODULE_TAGS               := optional
-LOCAL_MODULE                    := libqdMetaData
+LOCAL_MODULE                    := libqdMDsdm845
+LOCAL_OVERRIDES_MODULES         := libqdMetaData
 LOCAL_VENDOR_MODULE             := true
 include $(BUILD_SHARED_LIBRARY)
 
@@ -47,6 +48,8 @@ LOCAL_CFLAGS                    := $(common_flags) -Wno-sign-conversion
 LOCAL_CFLAGS                    += -DLOG_TAG=\"DisplayMetaData\"
 
 LOCAL_MODULE_TAGS               := optional
-LOCAL_MODULE                    := libqdMetaData.system
+LOCAL_MODULE                    := libqdMDsdm845.system
+LOCAL_OVERRIDES_MODULES         := libqdMetaData.system
+
 
 include $(BUILD_SHARED_LIBRARY)

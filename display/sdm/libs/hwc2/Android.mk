@@ -17,7 +17,7 @@ LOCAL_CFLAGS                  := -Wno-missing-field-initializers -Wno-unused-par
 LOCAL_CLANG                   := true
 
 LOCAL_SHARED_LIBRARIES        := libsdmcore libqservice libbinder libhardware libhardware_legacy \
-                                 libutils libcutils libsync libqdutils libqdMetaData libdl \
+                                 libutils libcutils libsync libqdutils libqdMDsdm845 libdl \
                                  libsdmutils libc++ liblog libgrallocutils libui libgpu_tonemapper \
                                  libhidlbase libhidltransport vendor.display.config@1.0_vendor
 

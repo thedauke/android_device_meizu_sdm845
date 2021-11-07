@@ -124,8 +124,8 @@ PRODUCT_PACKAGES += \
     memtrack.sdm845 \
     libdrmutils \
     libgrallocutils \
-    libqdMetaData \
-    libqdMetaData.system \
+    libqdMDsdm845 \
+    libqdMDsdm845.system \
     libqdutils \
     libsdmcore \
     libsdmutils \

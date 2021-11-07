@@ -91,7 +91,7 @@ function blob_fixup() {
     # Using sensor blobs from polaris
     vendor/lib/hw/camera.qcom.so)
         sed -i "s|libssc.so|libSSc.so|g" "${2}"
-        ;;
+        ;;&
     # Audio: Add libprocessgroup dependency
     vendor/lib/hw/audio.primary.sdm845.so | vendor/lib64/hw/audio.primary.sdm845.so)
         if [ -z $(patchelf --print-needed "${2}" | grep "libprocessgroup.so") ]; then
@@ -124,6 +124,10 @@ function blob_fixup() {
     # Make QTI SensorsCalibrate HAL load with VNDK 28 libbase
     vendor/lib64/hw/vendor.qti.hardware.sensorscalibrate@1.0-impl.so)
         sed -i "s|libbase.so|libbv28.so|g" "${2}"
+        ;;
+    # libqdMetaData already defined - override it
+    vendor/lib64/libOmxSwVencMpeg4.so | vendor/lib64/libOmxVdec.so | vendor/lib64/libOmxVenc.so | vendor/lib64/libvpplibrary.so | vendor/bin/wfdhdcphalservice | vendor/lib/hw/camera.qcom.so | vendor/lib/libOmxSwVencMpeg4.so | vendor/lib/libOmxVdec.so | vendor/lib/libOmxVenc.so | vendor/lib/libvpplibrary.so | vendor/lib/libwfdsourcesession_proprietary.so | vendor/lib/libwfdsourcesm_proprietary.so | system_ext/lib/libwfdmmsrc_system.so | system_ext/lib/libwfdservice.so | system_ext/lib/libwfdsinksm.so | system_ext/lib64/libwfdsinksm.so)
+        sed -i "s|libqdMetaData.so|libqdMDsdm845.so|g" "${2}"
         ;;
     esac
 }
