@@ -320,7 +320,3 @@ PRODUCT_PACKAGES += \
 TARGET_COMMON_QTI_COMPONENTS := \
     perf \
     av
-
-# FOD specific of crDroid
-EXTRA_FOD_ANIMATIONS := true
-TARGET_HAS_FOD := true
