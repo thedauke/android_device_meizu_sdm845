@@ -126,7 +126,7 @@ function blob_fixup() {
         sed -i "s|libbase.so|libbv28.so|g" "${2}"
         ;;
     # libqdMetaData already defined - override it
-    vendor/lib64/libOmxSwVencMpeg4.so | vendor/lib64/libOmxVdec.so | vendor/lib64/libOmxVenc.so | vendor/lib64/libvpplibrary.so | vendor/bin/wfdhdcphalservice | vendor/lib/hw/camera.qcom.so | vendor/lib/libOmxSwVencMpeg4.so | vendor/lib/libOmxVdec.so | vendor/lib/libOmxVenc.so | vendor/lib/libvpplibrary.so | vendor/lib/libwfdsourcesession_proprietary.so | vendor/lib/libwfdsourcesm_proprietary.so | system_ext/lib/libwfdmmsrc_system.so | system_ext/lib/libwfdservice.so | system_ext/lib/libwfdsinksm.so | system_ext/lib64/libwfdsinksm.so)
+    vendor/lib64/libOmxSwVencMpeg4.so | vendor/lib64/libOmxVdec.so | vendor/lib64/libOmxVenc.so | vendor/lib64/libvpplibrary.so | vendor/lib/hw/camera.qcom.so | vendor/lib/libOmxSwVencMpeg4.so | vendor/lib/libOmxVdec.so | vendor/lib/libOmxVenc.so | vendor/lib/libvpplibrary.so)
         sed -i "s|libqdMetaData.so|libqdMDsdm845.so|g" "${2}"
         ;;
     esac

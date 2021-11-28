@@ -15,9 +15,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 # Add developer GSI keys into ramdisk, to boot a developer GSI with verified boot.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
 
-# Inherit QCOM display dependencies.
-$(call inherit-product-if-exists, vendor/qcom/opensource/commonsys-intf/display/config/display-product-system.mk)
-
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay-sdm845
@@ -296,17 +293,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/wifi,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)
-
-# WiFi Display
-PRODUCT_PACKAGES += \
-    libclang_rt.ubsan_standalone-arm-android \
-    libnl \
-    libwfdaac_vendor \
-    WfdService \
-    WfdCommon
-
-PRODUCT_BOOT_JARS += \
-    WfdCommon
 
 # Tethering
 PRODUCT_PACKAGES += \
