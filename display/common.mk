@@ -7,7 +7,10 @@ display_config_version := $(shell \
 #Common C flags
 common_flags := -DDEBUG_CALC_FPS -Wno-missing-field-initializers
 common_flags += -Wconversion -Wall -Werror
-common_flags += -DUSE_GRALLOC1
+ifeq ($(TARGET_USES_GRALLOC1), true)
+    common_flags += -DUSE_GRALLOC1
+endif
+
 ifeq ($(TARGET_IS_HEADLESS), true)
     common_flags += -DTARGET_HEADLESS
     LOCAL_CLANG := false
