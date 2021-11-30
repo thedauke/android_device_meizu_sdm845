@@ -89,9 +89,9 @@ function blob_fixup() {
         patchelf --remove-needed "libandroid.so" "${2}"
         ;;
     # Using sensor blobs from polaris
-    vendor/lib/hw/camera.qcom.so)
-        sed -i "s|libssc.so|libSSc.so|g" "${2}"
-        ;;&
+    vendor/lib/libsensorcal.so | vendor/lib/libsnsdiaglog.so | vendor/lib/sensors.ssc.so | vendor/lib64/libsensorcal.so | vendor/lib64/libsnsdiaglog.so | vendor/lib64/sensors.ssc.so | vendor/bin/sensors.qcom)
+        patchelf --replace-needed "libssc.so" "libssc_sensors.so" "${2}"
+        ;;
     # Audio: Add libprocessgroup dependency
     vendor/lib/hw/audio.primary.sdm845.so | vendor/lib64/hw/audio.primary.sdm845.so)
         if [ -z $(patchelf --print-needed "${2}" | grep "libprocessgroup.so") ]; then
