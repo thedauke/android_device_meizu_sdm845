@@ -29,7 +29,7 @@
 #define FOD_POS_Y 531 * 3
 #define FOD_SIZE 62 * 3
 
-#define TOUCHPANAL_DEV_PATH "/dev/input/event5"
+#define TOUCHPANEL_DEV_PATH "/dev/input/event5"
 #define KEY_FOD 0x0272
 
 namespace vendor {
@@ -74,7 +74,7 @@ FingerprintInscreen::FingerprintInscreen()
     mGoodixFingerprintDaemon = IGoodixFingerprintDaemon::getService();
     mSteller = ISteller::getService();
 
-    keyEventWatcher = new KeyEventWatcher(TOUCHPANAL_DEV_PATH, [this](const std::string&, input_event evt) {
+    keyEventWatcher = new KeyEventWatcher(TOUCHPANEL_DEV_PATH, [this](const std::string&, input_event evt) {
         if (evt.code == KEY_FOD) {
             notifyKeyEvent(evt.value);
         }
