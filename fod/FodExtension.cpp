@@ -19,23 +19,17 @@
 #include <fstream>
 
 #define HBM_ENABLE_PATH "/sys/class/meizu/lcm/display/hbm"
+#define HBM_ON "1"
+#define HBM_OFF "2"
 
-/*
- * Write value to path and close file.
- */
-template <typename T>
-static void set(const std::string& path, const T& value) {
-    std::ofstream file(path);
-    file << value;
-}
+static bool HBMStatus = false;
 
 uint32_t getFodZOrder(uint32_t z, bool touched) {
-    if (touched) {
-        set(HBM_ENABLE_PATH, 1);
-    } else {
-        set(HBM_ENABLE_PATH, 2);
+    if (HBMStatus != touched) {
+        std::ofstream HBM(HBM_ENABLE_PATH);
+        HBM << (touched ? HBM_ON : HBM_OFF);
+        HBMStatus = touched;
     }
-
     return z;
 }
 
