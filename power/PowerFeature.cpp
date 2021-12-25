@@ -15,20 +15,14 @@
  */
 
 #define LOG_TAG "vendor.aospa.power-service.meizu_sdm845"
-// #define LOG_NDEBUG 0
 
 #include "PowerFeature.h"
 
 #include <android-base/logging.h>
-#include <android-base/properties.h>
 #include <stdio.h>
 #include <stdint.h>
 
-using android::base::GetUintProperty;
-using android::base::SetProperty;
-
 #define GESTURE_CONTROL_PATH "/sys/class/meizu/tp/gesture_control"
-#define GESTURE_CONTROL_PROPERTY "vendor.aospa.gesture_control_value"
 
 #define SLIDE_LEFT_ENABLE   (1 << 0)
 #define SLIDE_RIGHT_ENABLE  (1 << 1)
@@ -42,98 +36,81 @@ using android::base::SetProperty;
 #define DRAW_V_ENABLE       (1 << 13)
 #define ALL_GESTURE_ENABLE  (1 << 31)
 
-namespace {
-static std::string hex(uint32_t value) {
-    char buf[9];
-    snprintf(buf, sizeof(buf), "%08x", value);
-    return buf;
-}
-
-static bool setGesture(uint32_t value, bool enabled) {
-    FILE *file = fopen(GESTURE_CONTROL_PATH, "wb");
-    if (!file) {
-        LOG(ERROR) << "setValue: Failed opening " << GESTURE_CONTROL_PATH;
-        return false;
-    }
-
-    uint32_t mMainGestureControl = GetUintProperty<uint32_t>(GESTURE_CONTROL_PROPERTY, 0x0);
-
-    mMainGestureControl &= ~ALL_GESTURE_ENABLE;
-
-    if (enabled) {
-      mMainGestureControl |= value;
-    } else {
-      mMainGestureControl &= ~value;
-    }
-
-    if (mMainGestureControl != 0) {
-        mMainGestureControl |= ALL_GESTURE_ENABLE;
-    }
-
-    uint8_t buf[4];
-    buf[0] = mMainGestureControl & 0xFF;
-    buf[1] = (mMainGestureControl >> 8) & 0xFF;
-    buf[2] = (mMainGestureControl >> 16) & 0xFF;
-    buf[3] = (mMainGestureControl >> 24) & 0xFF;
-
-    size_t ret = fwrite(buf, sizeof(buf), 1, file);
-    fclose(file);
-
-    LOG(INFO) << "setValue: " << hex(mMainGestureControl) << " " << ret;
-
-    SetProperty(GESTURE_CONTROL_PROPERTY, std::to_string(mMainGestureControl));
-
-    return true;
-}
-}  // anonymous namespace
-
 namespace aidl {
 namespace vendor {
 namespace aospa {
 namespace power {
 
 ndk::ScopedAStatus PowerFeature::setFeature(Feature feature, bool enabled) {
-    bool ret;
+    uint32_t value;
     switch (feature) {
         case Feature::DOUBLE_TAP:
-            ret = setGesture(DOUBLE_TAP_ENABLE, enabled);
+            value = DOUBLE_TAP_ENABLE;
             break;
         case Feature::DRAW_V:
-            ret = setGesture(DRAW_V_ENABLE, enabled);
+            value = DRAW_V_ENABLE;
             break;
         case Feature::DRAW_O:
-            ret = setGesture(DRAW_O_ENABLE, enabled);
+            value = DRAW_O_ENABLE;
             break;
         case Feature::DRAW_M:
-            ret = setGesture(DRAW_M_ENABLE, enabled);
+            value = DRAW_M_ENABLE;
             break;
         case Feature::DRAW_W:
-            ret = setGesture(DRAW_W_ENABLE, enabled);
+            value = DRAW_W_ENABLE;
             break;
         case Feature::ONE_FINGER_SWIPE_UP:
-            ret = setGesture(SLIDE_UP_ENABLE, enabled);
+            value = SLIDE_UP_ENABLE;
             break;
         case Feature::ONE_FINGER_SWIPE_RIGHT:
-            ret = setGesture(SLIDE_RIGHT_ENABLE, enabled);
+            value = SLIDE_RIGHT_ENABLE;
             break;
         case Feature::ONE_FINGER_SWIPE_DOWN:
-            ret = setGesture(SLIDE_DOWN_ENABLE, enabled);
+            value = SLIDE_DOWN_ENABLE;
             break;
         case Feature::ONE_FINGER_SWIPE_LEFT:
-            ret = setGesture(SLIDE_LEFT_ENABLE, enabled);
+            value = SLIDE_LEFT_ENABLE;
             break;
         case Feature::DRAW_S:
-            ret = setGesture(DRAW_S_ENABLE, enabled);
+            value = DRAW_S_ENABLE;
             break;
         default:
             return ndk::ScopedAStatus::fromServiceSpecificError(ENOTSUP);
     }
 
-    if (!ret) {
-        return ndk::ScopedAStatus::fromServiceSpecificError(EPERM); 
+    LOG(INFO) << "setFeature: Feature " << toString(feature) << " => 0x" << std::hex 
+              << value << " (" << std::boolalpha << enabled << ")";
+
+    if (access(GESTURE_CONTROL_PATH, R_OK | W_OK)) {
+        return ndk::ScopedAStatus::fromServiceSpecificError(errno);
     }
 
-    return ndk::ScopedAStatus::ok();
+    FILE *GestureControl = fopen(GESTURE_CONTROL_PATH, "r+b");
+
+    int GestureValue;
+    fscanf(GestureControl, "%x", &GestureValue);
+
+    LOG(INFO) << "setFeature: Read GestureValue: 0x" << std::hex << GestureValue;
+
+    GestureValue &= ~ALL_GESTURE_ENABLE;
+    if (enabled) {
+      GestureValue |= value;
+    } else {
+      GestureValue &= ~value;
+    }
+    if (GestureValue) {
+        GestureValue |= ALL_GESTURE_ENABLE;
+    }
+
+    LOG(INFO) << "setFeature: Will be written GestureValue: 0x" << std::hex << GestureValue;
+
+    uint8_t byteGestureValue[4];
+    memcpy(byteGestureValue, &GestureValue, sizeof(GestureValue));
+
+    fwrite(byteGestureValue, sizeof(byteGestureValue), 1, GestureControl);
+    fclose(GestureControl);
+
+    return ndk::ScopedAStatus::ok(); 
 }
 
 }  // namespace power
