@@ -9,6 +9,9 @@ ro.bluetooth.wipower=false
 # Coresight
 persist.debug.coresight.config=stm-events
 
+# eBPF
+ro.kernel.ebpf.supported=false
+
 # FRP
 ro.frp.pst=/dev/block/platform/soc/1d84000.ufshc/by-name/frp
 
