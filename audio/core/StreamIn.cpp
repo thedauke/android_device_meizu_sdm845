@@ -524,12 +524,8 @@ Result StreamIn::doUpdateSinkMetadataV7(const SinkMetadata& sinkMetadata) {
 #endif  //  MAJOR_VERSION >= 7
 
 #if MAJOR_VERSION <= 6
-Return<void> StreamIn::updateSinkMetadata(const SinkMetadata& sinkMetadata) {
-    if (mStream->update_sink_metadata == nullptr) {
-        return Void();  // not supported by the HAL
-    }
-    (void)doUpdateSinkMetadata(sinkMetadata);
-    return Void();
+Return<void> StreamIn::updateSinkMetadata(const SinkMetadata&) {
+    return Void();  // not supported by the HAL
 }
 #elif MAJOR_VERSION >= 7
 Return<Result> StreamIn::updateSinkMetadata(const SinkMetadata& sinkMetadata) {
