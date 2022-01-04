@@ -602,24 +602,24 @@ vendor/lib64/libqmi_encdec.so
 vendor/lib64/libsmemlog.so
 
 # QMI - from beryllium - Xiaomi/beryllium/beryllium:10/QKQ1.190828.002/V11.0.9.0.QEJMIXM:user/release-keys
-vendor/lib/libqmi_cci.so|a06c48ad81875670eaa982d58704cb005c937621
-vendor/lib64/libqmi_cci.so|b573caab02a748ceb63a596b6dfbca946b5fc512
+-vendor/lib/libqmi_cci.so|a06c48ad81875670eaa982d58704cb005c937621
+-vendor/lib64/libqmi_cci.so|b573caab02a748ceb63a596b6dfbca946b5fc512
 
 # QMI - from grus - miui_GRUS_V11.0.5.0.PFBCNXM_41b4612800_9.0
+-vendor/lib/libidl.so|1f43e4f4deaab16227b0e80c47076ab36652d015
+-vendor/lib/libqmiservices.so|57c0b8bb45c41f2492ec46506b9db80c77d1333b
+-vendor/lib64/libqmiservices.so|d57b7dae0e1302ee5f29d60b7196bb5947e61ca5
+-vendor/lib64/libidl.so|849bc2712b8221c6b05e16eb9be3e024bdd2136d
 etc/permissions/qti_libpermissions.xml|d0c300e094c36bfb262cf001773bd5cc8d5858d8
 etc/permissions/qti_permissions.xml|e6ff4572352b1a4f91b6b9d7cbb1cad9924410a0
 lib/libdiag_system.so|d6dbcfa34b6588ec1acd8a09a245a3fb5bfe376e
 lib64/libdiag_system.so|22811fe7770f4fc4b57bd1166ae99ee031ef9265
 vendor/lib/libdiag.so|d1230981a5ac39929ccffe5e007fd33404bc554e
 vendor/lib/libdsutils.so|5171d9e180f36a3317f7a3ef6db2bb280cfafa49
-vendor/lib/libidl.so|1f43e4f4deaab16227b0e80c47076ab36652d015
-vendor/lib/libqmiservices.so|57c0b8bb45c41f2492ec46506b9db80c77d1333b
 vendor/lib64/libdiag.so|051a0b8ba5f928ab20d75f34a64eaa16f2091848
 vendor/lib64/libdsutils.so|d5f560938f452413a47bb48638ead0297f7fde2d
-vendor/lib64/libidl.so|849bc2712b8221c6b05e16eb9be3e024bdd2136d
 vendor/lib64/libqdi.so|14fef00fbabb8b330a6dddf29315308a17ecad13
 vendor/lib64/libqdp.so|cefeb65771d1ee89bed38f886d528bba366d6a5c
-vendor/lib64/libqmiservices.so|d57b7dae0e1302ee5f29d60b7196bb5947e61ca5
 vendor/lib64/vendor.qti.hardware.data.qmi@1.0.so|f1189140dcf3f5dbc09a5eea1a0aaaa06defce66
 
 # Radio - from grus - miui_GRUS_V11.0.5.0.PFBCNXM_41b4612800_9.0
