@@ -259,16 +259,11 @@ PRODUCT_PACKAGES += \
     vibrator.sdm845
 
 # VNDK-SP
-PRODUCT_EXTRA_VNDK_VERSIONS := 29 28 27
-
 PRODUCT_PACKAGES += \
-    com.android.vndk.current.on_vendor \
-    libwui \
-    vndk-apex-ext
+    libwui
 
 PRODUCT_COPY_FILES += \
-    prebuilts/vndk/v28/arm64/arch-arm64-armv8-a/shared/vndk-sp/libbase.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libbv28.so \
-    $(LOCAL_PATH)/vndk/vndksp.libraries.30.txt:$(TARGET_COPY_OUT_VENDOR)/apex/com.android.vndk.current.on_vendor/etc/vndksp.libraries.30.txt
+    prebuilts/vndk/v28/arm64/arch-arm64-armv8-a/shared/vndk-sp/libbase.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libbv28.so
 
 # Native libraries whitelist
 PRODUCT_COPY_FILES += \
