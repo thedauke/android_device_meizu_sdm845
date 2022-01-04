@@ -12,12 +12,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk
 # Inherit from m1892 device
 $(call inherit-product, device/meizu/sdm845/m1892/m1892.mk)
 
-# Inherit common PA configuration
-$(call inherit-product, vendor/pa/config/common_full_phone.mk)
+# Inherit from the AOSPA configuration
+$(call inherit-product, vendor/aospa/target/product/aospa-target.mk)
 
 # Credits to XiNGRZ
 
-PRODUCT_NAME := pa_m1892
+PRODUCT_NAME := aospa_m1892
 PRODUCT_BRAND := Meizu
 PRODUCT_DEVICE := m1892
 PRODUCT_MANUFACTURER := Meizu

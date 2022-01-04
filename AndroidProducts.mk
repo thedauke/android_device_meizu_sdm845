@@ -5,9 +5,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/pa_m1882.mk \
-    $(LOCAL_DIR)/pa_m1892.mk
+    $(LOCAL_DIR)/aospa_m1882.mk \
+    $(LOCAL_DIR)/aospa_m1892.mk
 
 COMMON_LUNCH_CHOICES := \
-    pa_m1882-userdebug \
-    pa_m1892-userdebug
+    aospa_m1882-userdebug \
+    aospa_m1892-userdebug
